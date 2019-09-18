@@ -1,0 +1,6 @@
+Some NuGet packages could not be added to your project ReadlnLibrary\ReadlnLibrary.csproj. This could have been caused if you were offline. 
+Please verify the following list of packages needed by your project's code and manually add the missing packages: 
+
+Install-Package -Id Microsoft.Xaml.Behaviors.Uwp.Managed -Version 2.0.1
+Install-Package -Id MvvmLightStd10 -Version 5.4.1.2
+Install-Package -Id AdaptiveCards -Version 1.2.0
