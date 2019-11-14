@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Source>D:\Dev\MI\Projects\Readln\Images\Logo\logo_1.png</Source>
+    <SmallTileSource>D:\Dev\MI\Projects\Readln\Images\Logo\logo_1.png</SmallTileSource>
+    <MediumTileSource>D:\Dev\MI\Projects\Readln\Images\Logo\logo_1.png</MediumTileSource>
+    <WideTileSource>D:\Dev\MI\Projects\Readln\Images\Logo\logo_1.png</WideTileSource>
+    <LargeTileSource>D:\Dev\MI\Projects\Readln\Images\Logo\logo_1.png</LargeTileSource>
+    <AppIconSource>D:\Dev\MI\Projects\Readln\Images\Logo\logo_1.png</AppIconSource>
+    <SplashScreenSource>D:\Dev\MI\Projects\Readln\Images\Logo\logo_1.png</SplashScreenSource>
+    <PackageLogoSource>D:\Dev\MI\Projects\Readln\Images\Logo\logo_1.png</PackageLogoSource>
+    <ProjectView>ShowAllFiles</ProjectView>
+  </PropertyGroup>
+</Project>

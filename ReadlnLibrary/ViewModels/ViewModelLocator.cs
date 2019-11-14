@@ -22,6 +22,7 @@ namespace ReadlnLibrary.ViewModels
             }
 
             SimpleIoc.Default.Register(() => new NavigationServiceEx());
+            SimpleIoc.Default.Register<DocumentService>();
             Register<MainViewModel, MainPage>();
             Register<SettingsViewModel, SettingsPage>();
             Register<ShareTargetViewModel, ShareTargetPage>();

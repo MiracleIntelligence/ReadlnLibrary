@@ -1,0 +1,8 @@
+ReadlnLibrary/obj/
+ReadlnLibrary/bin/
+ReadlnLibrary.Core.Tests.MSTest/bin/
+.vs/
+ReadlnLibrary.Core.Tests.MSTest/obj/
+ReadlnLibrary.Core/obj/
+ReadlnLibrary.Tests.MSTest/bin/
+ReadlnLibrary.Tests.MSTest/obj/

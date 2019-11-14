@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ReadlnLibrary.Core.Models;
 using ReadlnLibrary.Managers;
+using ReadlnLibrary.Services;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
@@ -13,19 +14,22 @@ namespace ReadlnLibrary.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        private DocumentService _documentService;
+
         public ICommand AddFileCommand { get; private set; }
         public ICommand OpenFileCommand { get; private set; }
 
         public ObservableCollection<RdlnDocument> Documents { get; private set; }
         public bool LibraryIsEmpty => !(Documents?.Count > 0);
-        public MainViewModel()
+        public MainViewModel(DocumentService documentService)
         {
+            _documentService = documentService;
             AddFileCommand = new RelayCommand(AddFile);
             OpenFileCommand = new RelayCommand<RdlnDocument>(OpenFile);
         }
 
         private async void OpenFile(RdlnDocument doc)
-        {            
+        {
             if (doc != null && !String.IsNullOrEmpty(doc.Path))
             {
                 try
@@ -62,7 +66,10 @@ namespace ReadlnLibrary.ViewModels
                     Title = file.DisplayName,
                     Token = faToken
                 };
-                var count = DatabaseManager.Connection.Insert(document);
+
+                var doc = await _documentService.FillDocumentData(document);
+
+                var count = DatabaseManager.Connection.Insert(doc);
 
                 if (count > 0)
                 {
@@ -70,7 +77,7 @@ namespace ReadlnLibrary.ViewModels
                     RaisePropertyChanged(nameof(LibraryIsEmpty));
                 }
 
-               
+
                 // Launch the retrieved file
                 //var success = await Windows.System.Launcher.LaunchFileAsync(file);
 
