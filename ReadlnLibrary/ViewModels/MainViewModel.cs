@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ReadlnLibrary.Core.Models;
 using ReadlnLibrary.Managers;
 using ReadlnLibrary.Services;
-using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
 
@@ -18,14 +18,38 @@ namespace ReadlnLibrary.ViewModels
 
         public ICommand AddFileCommand { get; private set; }
         public ICommand OpenFileCommand { get; private set; }
+        public ICommand RemoveDocCommand { get; private set; }
 
         public ObservableCollection<RdlnDocument> Documents { get; private set; }
         public bool LibraryIsEmpty => !(Documents?.Count > 0);
         public MainViewModel(DocumentService documentService)
         {
             _documentService = documentService;
+
             AddFileCommand = new RelayCommand(AddFile);
             OpenFileCommand = new RelayCommand<RdlnDocument>(OpenFile);
+            RemoveDocCommand = new RelayCommand<RdlnDocument>(RemoveDoc);
+        }
+
+        private void RemoveDoc(RdlnDocument doc)
+        {
+            if (doc != null)
+            {
+                try
+                {
+                    var result = DatabaseManager.Connection.Delete(doc);
+                    if (result != 0)
+                    {
+                        Documents.Remove(doc);
+                    }
+
+                    RaisePropertyChanged(nameof(LibraryIsEmpty));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+            }
         }
 
         private async void OpenFile(RdlnDocument doc)
@@ -39,7 +63,7 @@ namespace ReadlnLibrary.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    throw;
+                    Debug.WriteLine(ex);
                 }
             }
         }
