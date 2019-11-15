@@ -46,12 +46,11 @@ namespace ReadlnLibrary.ViewModels
 
         public async void AddFile()
         {
-
             FileOpenPicker openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.Thumbnail;
             openPicker.SuggestedStartLocation = PickerLocationId.Desktop;
             openPicker.CommitButtonText = "Open";
-            openPicker.FileTypeFilter.Add(".txt");
+            openPicker.FileTypeFilter.Add("*");
             var file = await openPicker.PickSingleFileAsync();
 
 
