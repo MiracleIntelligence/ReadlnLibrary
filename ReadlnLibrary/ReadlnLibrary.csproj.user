@@ -1,14 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Source>D:\Dev\MI\Projects\Readln\Images\Logo\logo_1.png</Source>
-    <SmallTileSource>D:\Dev\MI\Projects\Readln\Images\Logo\logo_1.png</SmallTileSource>
-    <MediumTileSource>D:\Dev\MI\Projects\Readln\Images\Logo\logo_1.png</MediumTileSource>
-    <WideTileSource>D:\Dev\MI\Projects\Readln\Images\Logo\logo_1.png</WideTileSource>
-    <LargeTileSource>D:\Dev\MI\Projects\Readln\Images\Logo\logo_1.png</LargeTileSource>
-    <AppIconSource>D:\Dev\MI\Projects\Readln\Images\Logo\logo_1.png</AppIconSource>
-    <SplashScreenSource>D:\Dev\MI\Projects\Readln\Images\Logo\logo_1.png</SplashScreenSource>
-    <PackageLogoSource>D:\Dev\MI\Projects\Readln\Images\Logo\logo_1.png</PackageLogoSource>
+    <Source>C:\dev\MI\Projects\Readln\Resources\Logo.png</Source>
+    <SmallTileSource>C:\dev\MI\Projects\Readln\Resources\Logo.png</SmallTileSource>
+    <MediumTileSource>C:\dev\MI\Projects\Readln\Resources\Logo.png</MediumTileSource>
+    <WideTileSource>C:\dev\MI\Projects\Readln\Resources\Logo.png</WideTileSource>
+    <LargeTileSource>C:\dev\MI\Projects\Readln\Resources\Logo.png</LargeTileSource>
+    <AppIconSource>C:\dev\MI\Projects\Readln\Resources\Logo.png</AppIconSource>
+    <SplashScreenSource>C:\dev\MI\Projects\Readln\Resources\Logo.png</SplashScreenSource>
+    <PackageLogoSource>C:\dev\MI\Projects\Readln\Resources\Logo.png</PackageLogoSource>
     <ProjectView>ShowAllFiles</ProjectView>
+    <AppxShowAllApps>False</AppxShowAllApps>
+    <UapAppxPackageBuildMode>StoreOnly</UapAppxPackageBuildMode>
+    <AppxBuildConfigurationSelection>x86|x64|arm</AppxBuildConfigurationSelection>
+    <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <DeviceId>30f105c9-681e-420b-a277-7c086ead8a4e</DeviceId>
+    <UseEmulator>true</UseEmulator>
   </PropertyGroup>
 </Project>

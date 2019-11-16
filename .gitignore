@@ -7,3 +7,5 @@ ReadlnLibrary.Core/obj/
 ReadlnLibrary.Tests.MSTest/bin/
 ReadlnLibrary.Tests.MSTest/obj/
 ReadlnLibrary.Core/bin/
+ReadlnLibrary/AppPackages/
+ReadlnLibrary/BundleArtifacts/

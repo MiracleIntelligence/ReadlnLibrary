@@ -45,11 +45,16 @@ namespace ReadlnLibrary.Views
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             var button = sender as Button;
-            
+
             if (ViewModel.OpenFileCommand != null && ViewModel.OpenFileCommand.CanExecute(button.DataContext))
             {
                 ViewModel.OpenFileCommand.Execute(button.DataContext);
             };
+        }
+
+        private void DocFlyoutRemoveClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            DocFlyout.Hide();
         }
     }
 }
