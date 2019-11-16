@@ -78,7 +78,7 @@
             </Grid>
             <Grid Grid.Row="1">
                 <StackPanel>
-                    <TextBlock Text="Tap to add books"
+                    <TextBlock Text="Tap to add documents"
                            HorizontalAlignment="Center" FontSize="36"/>
                     <TextBlock Text="We will organize them for you"
                                HorizontalAlignment="Center"
