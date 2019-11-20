@@ -126,7 +126,7 @@ namespace ReadlnLibrary.ViewModels
                 string faToken = StorageApplicationPermissions.FutureAccessList.Add(file);
                 var document = new RdlnDocument
                 {
-                    DocumentId = Guid.NewGuid().ToString(),
+                    Id = Guid.NewGuid().ToString(),
                     Path = file.Path,
                     Name = file.Name,
                     Title = file.DisplayName,
