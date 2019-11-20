@@ -52,7 +52,7 @@ namespace ReadlnLibrary.Views
             };
         }
 
-        private void DocFlyoutRemoveClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void DocFlyoutButtonClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             DocFlyout.Hide();
         }

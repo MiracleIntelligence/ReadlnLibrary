@@ -27,6 +27,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="TextBlockFileName"
                    x:Uid="TextBlockFileName"
@@ -54,5 +55,14 @@
                  Text="{x:Bind DocumentAuthor, Mode=TwoWay}"
                  Grid.Column="1"
                  Grid.Row="2"/>
+        <TextBlock  x:Name="TextBlockCategory"
+                    Style="{StaticResource ValueTextBlockStyle}"
+                    Text="Category"
+                    Grid.Row="3"/>
+        <TextBox x:Name="TextBoxCategory"
+                 Style="{StaticResource ValueTextBoxStyle}"
+                 Text="{x:Bind DocumentCategory, Mode=TwoWay}"
+                 Grid.Column="1"
+                 Grid.Row="3"/>
     </Grid>
 </ContentDialog>

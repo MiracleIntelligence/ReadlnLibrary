@@ -14,5 +14,6 @@ namespace ReadlnLibrary.Core.Models
         public string Author { get; set; }
         public string Path { get; set; }
         public string Token { get; set; }
+        public string Category { get; set; }
     }
 }

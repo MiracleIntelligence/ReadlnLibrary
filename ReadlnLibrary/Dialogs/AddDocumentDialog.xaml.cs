@@ -62,6 +62,18 @@ namespace ReadlnLibrary.Dialogs
 
 
 
+        public string DocumentCategory
+        {
+            get { return (string)GetValue(DocumentCategoryProperty); }
+            set { SetValue(DocumentCategoryProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for DocumentCategory.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DocumentCategoryProperty =
+            DependencyProperty.Register("DocumentCategory", typeof(string), typeof(AddDocumentDialog), new PropertyMetadata(0));
+
+
+
         public AddDocumentDialog()
         {
             this.InitializeComponent();
@@ -72,6 +84,7 @@ namespace ReadlnLibrary.Dialogs
             DocumentName = doc.Name;
             DocumentTitle = doc.Title;
             DocumentAuthor = doc.Author;
+            DocumentCategory = doc.Category;
         }
     }
 }

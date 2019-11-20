@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+
 using ReadlnLibrary.Core.Models;
 using ReadlnLibrary.Dialogs;
 
@@ -10,8 +8,15 @@ namespace ReadlnLibrary.Services
 {
     public class DocumentService
     {
-        public async Task<RdlnDocument> FillDocumentData(RdlnDocument doc)
+        public async Task<bool> FillDocumentData(RdlnDocument doc)
         {
+            if (doc == null)
+            {
+                throw new ArgumentNullException(nameof(doc));
+            }
+
+            var fillResult = false;
+
             var dialog = new AddDocumentDialog();
             dialog.Init(doc);
             var result = await dialog.ShowAsync();
@@ -19,8 +24,11 @@ namespace ReadlnLibrary.Services
             {
                 doc.Title = dialog.DocumentTitle;
                 doc.Author = dialog.DocumentAuthor;
+                doc.Category = dialog.DocumentCategory;
+
+                fillResult = true;
             }
-            return doc;
+            return fillResult;
         }
     }
 }

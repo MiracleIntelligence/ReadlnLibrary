@@ -361,9 +361,9 @@
     <Language Code="zu-za" InMinimumRequirementSet="true" />
   </SupportedLocales>
   <ProductReservedInfo>
-    <MainPackageIdentityName>22482MI.ReadlnLibrary</MainPackageIdentityName>
+    <MainPackageIdentityName>22482MI.RdlnLibrary</MainPackageIdentityName>
     <ReservedNames>
-      <ReservedName>Readln Library</ReservedName>
+      <ReservedName>Rdln Library</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
@@ -372,11 +372,12 @@
     <MainPackageIdentityName>22482MI.BitCloud</MainPackageIdentityName>
     <MainPackageIdentityName>22482MI.CoreStatistic</MainPackageIdentityName>
     <MainPackageIdentityName>22482MI.Readln</MainPackageIdentityName>
+    <MainPackageIdentityName>22482MI.ReadlnLibrary</MainPackageIdentityName>
     <MainPackageIdentityName>22482MI.SpringingTasks</MainPackageIdentityName>
     <MainPackageIdentityName>22482MI.124347D074A90</MainPackageIdentityName>
     <MainPackageIdentityName>22482MI.1168C5D0DC86</MainPackageIdentityName>
     <MainPackageIdentityName>22482MI.270770B2C09FF</MainPackageIdentityName>
     <MainPackageIdentityName>22482MI.63724C646FE1C</MainPackageIdentityName>
   </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://developer.microsoft.com/dashboard/Application?appId=9WZDNCRDX4RF" />
+  <PackageInfoList LandingUrl="https://developer.microsoft.com/dashboard/Application?appId=9NMHRJVXWMWF" />
 </StoreAssociation>

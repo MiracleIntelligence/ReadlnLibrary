@@ -6,19 +6,36 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:models="using:ReadlnLibrary.Core.Models"
-    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:wuxdata="using:Windows.UI.Xaml.Data"
     xmlns:rdlnControls="using:ReadlnLibrary.Controls"
+    xmlns:converters="using:ReadlnLibrary.Converters"
     Style="{StaticResource PageStyle}"
     RequestedTheme="Dark"
     mc:Ignorable="d">
     <Page.Resources>
+        <Style x:Key="FlyoutButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <converters:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter"/>
         <Flyout x:Key="DocFlyout"
                 x:Name="DocFlyout">
-            <Button Content="Remove"
-                    Click="DocFlyoutRemoveClick"
+            <StackPanel>
+                <Button
+                    x:Uid="ButtonEdit"
+                    Content="Edit"
+                    Style="{StaticResource FlyoutButtonStyle}"
+                    Click="DocFlyoutButtonClick"
+                    Command="{x:Bind ViewModel.EditDocCommand}"
+                    CommandParameter="{Binding}"/>
+                <Button
+                    x:Uid="ButtonRemove"
+                    Content="Remove"
+                    Style="{StaticResource FlyoutButtonStyle}"
+                    Click="DocFlyoutButtonClick"
                     Command="{x:Bind ViewModel.RemoveDocCommand}"
                     CommandParameter="{Binding}"/>
+            </StackPanel>
         </Flyout>
         <DataTemplate x:Key="DocTemplate">
             <Button Style="{StaticResource ButtonRevealStyle}" Margin="2" ContextFlyout="{StaticResource DocFlyout}" Click="Button_Click">
@@ -53,10 +70,33 @@
                 </Grid>
             </Button>
         </DataTemplate>
+        <CollectionViewSource x:Key="CVSDocs"
+                              x:Name="CVSDocs"
+                              Source="{x:Bind ViewModel.GroupedDocuments, Mode=OneWay}"
+                              IsSourceGrouped="True"/>
+        <DataTemplate x:Key="ZoomedOutTemplate" x:DataType="wuxdata:ICollectionViewGroup">
+            <TextBlock Text="{Binding Group.Key}"
+                       Style="{StaticResource SubtitleTextBlockStyle}"
+                       TextWrapping="Wrap"/>
+        </DataTemplate>
     </Page.Resources>
     <Page.TopAppBar>
         <CommandBar>
             <AppBarToggleButton Icon="Add" Label="Add" Command="{x:Bind ViewModel.AddFileCommand}"/>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="Order by Title"
+                              Command="{x:Bind ViewModel.SetGroupCommand}"
+                              CommandParameter="Title"
+                              />
+                <AppBarButton Label="Order by Category"
+                              Command="{x:Bind ViewModel.SetGroupCommand}"
+                              CommandParameter="Category"
+                              />
+                <AppBarButton Label="Order by Author"
+                              Command="{x:Bind ViewModel.SetGroupCommand}"
+                              CommandParameter="Author"
+                              />
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.TopAppBar>
     <Grid x:Uid="ContentArea" x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
@@ -94,9 +134,36 @@
                 </Grid>
             </Grid>
         </Grid>
-        <Grid x:Name="DefaultScreen" Margin="15">
-            <StackPanel>
-                <controls:ItemsRepeater HorizontalAlignment="Stretch"
+        <Grid x:Name="DefaultScreen"
+              Visibility="{x:Bind ViewModel.LibraryIsEmpty, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}"
+              Margin="15">
+            <SemanticZoom>
+                <SemanticZoom.ZoomedInView>
+                    <!-- Put the GridView for the zoomed in view here. -->
+                    <GridView x:Name="DocumentsListView"
+                                  ItemsSource="{Binding Source={StaticResource CVSDocs}}"
+                                  ItemTemplate="{StaticResource DocTemplate}">
+                        <GridView.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Key}" />
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                            </GroupStyle>
+                        </GridView.GroupStyle>
+                    </GridView>
+                </SemanticZoom.ZoomedInView>
+
+                <SemanticZoom.ZoomedOutView>
+                    <GridView Name="HeadersListView"
+                                  ItemsSource="{x:Bind CVSDocs.View.CollectionGroups, Mode=OneWay}"
+                                  SelectionMode="None"
+                                  ItemTemplate="{StaticResource ZoomedOutTemplate}" />
+                </SemanticZoom.ZoomedOutView>
+            </SemanticZoom>
+
+            <!--<controls:ItemsRepeater HorizontalAlignment="Stretch"
                                     x:Name="List"
                                     DataContext="{x:Bind ViewModel}"
                                     MinWidth="200"
@@ -105,8 +172,7 @@
                     <controls:ItemsRepeater.Layout>
                         <controls:UniformGridLayout Orientation="Vertical"/>
                     </controls:ItemsRepeater.Layout>
-                </controls:ItemsRepeater>
-            </StackPanel>
+                </controls:ItemsRepeater>-->
         </Grid>
     </Grid>
 </Page>

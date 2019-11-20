@@ -8,14 +8,14 @@
   IgnorableNamespaces="uap mp genTemplate">
 
   <Identity
-    Name="22482MI.ReadlnLibrary"
-    Publisher="CN=545DCFBE-BCC2-431A-AE41-0ADB3A9B1B8E"
+    Name="22482MI.RdlnLibraryTest"
+    Publisher="CN=MI"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="8ce07008-9d58-416e-a822-fef43702349a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="14ff5a0d-2bbb-4eb2-8879-bdf72030be1d" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Readln Library</DisplayName>
+    <DisplayName>Rdln Library</DisplayName>
     <PublisherDisplayName>MI</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
