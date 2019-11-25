@@ -133,16 +133,18 @@ namespace ReadlnLibrary.ViewModels
                     Token = faToken
                 };
 
-                var doumentWasChangef = await _documentService.FillDocumentData(document).ConfigureAwait(true);
+                var documentWasChanged = await _documentService.FillDocumentData(document).ConfigureAwait(true);
 
-                var count = DatabaseManager.Connection.Insert(document);
-
-                if (count > 0)
+                if (documentWasChanged)
                 {
-                    GroupedDocuments.Add(document);
-                    RaisePropertyChanged(nameof(LibraryIsEmpty));
-                }
+                    var count = DatabaseManager.Connection.Insert(document);
 
+                    if (count > 0)
+                    {
+                        GroupedDocuments.Add(document);
+                        RaisePropertyChanged(nameof(LibraryIsEmpty));
+                    }
+                }
 
                 // Launch the retrieved file
                 //var success = await Windows.System.Launcher.LaunchFileAsync(file);

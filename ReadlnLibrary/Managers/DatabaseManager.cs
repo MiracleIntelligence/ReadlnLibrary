@@ -18,6 +18,8 @@ namespace ReadlnLibrary.Managers
             string path = Path.Combine(ApplicationData.Current.LocalFolder.Path, LOCAL_DB_NAME);
             var db = new SQLiteConnection(path);
             db.CreateTable<RdlnDocument>();
+            db.CreateTable<RdlnCategory>();
+            db.CreateTable<RdlnField>();
 
             Connection = db;
 

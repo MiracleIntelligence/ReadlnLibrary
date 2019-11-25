@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using ReadlnLibrary.Core.Models;
+using ReadlnLibrary.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -32,9 +33,7 @@ namespace ReadlnLibrary.Dialogs
         // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DocumentTitleProperty =
             DependencyProperty.Register("DocumentTitle", typeof(string), typeof(AddDocumentDialog), new PropertyMetadata(0));
-
-
-
+        private List<RdlnCategory> _categories;
 
         public string DocumentName
         {
@@ -79,12 +78,50 @@ namespace ReadlnLibrary.Dialogs
             this.InitializeComponent();
         }
 
-        internal void Init(RdlnDocument doc)
+        internal void Init(RdlnDocument doc, List<RdlnCategory> categories)
         {
+            _categories = categories;
+
             DocumentName = doc.Name;
             DocumentTitle = doc.Title;
             DocumentAuthor = doc.Author;
             DocumentCategory = doc.Category;
+
+
+            ASBCategory.ItemsSource = _categories;
+        }
+
+        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            // Only get results when it was a user typing,
+            // otherwise assume the value got filled in by TextMemberPath
+            // or the handler for SuggestionChosen.
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                //Set the ItemsSource to be your filtered dataset
+                //sender.ItemsSource = dataset;
+                sender.ItemsSource = _categories?.Where(c => c.Name.Contains(sender.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            }
+        }
+
+
+        private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            // Set sender.Text. You can use args.SelectedItem to build your text string.
+            ASBCategory.Text = (args.SelectedItem as RdlnCategory)?.Name;
+        }
+
+
+        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            if (args.ChosenSuggestion != null)
+            {
+                // User selected an item from the suggestion list, take an action on it here.
+            }
+            else
+            {
+                // Use args.QueryText to determine what to do.
+            }
         }
     }
 }

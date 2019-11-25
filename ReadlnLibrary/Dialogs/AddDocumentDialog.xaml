@@ -5,12 +5,16 @@
     xmlns:local="using:ReadlnLibrary.Dialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:ReadlnLibrary.Core.Models"
     mc:Ignorable="d"
     Title="Document"
     PrimaryButtonText="Save"
     SecondaryButtonText="Cancel">
     <ContentDialog.Resources>
         <Style TargetType="TextBox" x:Key="ValueTextBoxStyle">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="AutoSuggestBox" x:Key="ValueAutoTextBoxStyle">
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
         <Style TargetType="TextBlock" x:Key="ValueTextBlockStyle">
@@ -59,10 +63,28 @@
                     Style="{StaticResource ValueTextBlockStyle}"
                     Text="Category"
                     Grid.Row="3"/>
-        <TextBox x:Name="TextBoxCategory"
+        <!--<TextBox x:Name="TextBoxCategory"
                  Style="{StaticResource ValueTextBoxStyle}"
                  Text="{x:Bind DocumentCategory, Mode=TwoWay}"
                  Grid.Column="1"
-                 Grid.Row="3"/>
+                 Grid.Row="3"/>-->
+        <AutoSuggestBox x:Name="ASBCategory"
+                        Text="{x:Bind DocumentCategory, Mode=TwoWay}"
+                        Style="{StaticResource ValueAutoTextBoxStyle}"
+                        PlaceholderText="Category"
+                        QueryIcon="Find"
+                        Width="200"
+                        TextChanged="AutoSuggestBox_TextChanged"
+                        QuerySubmitted="AutoSuggestBox_QuerySubmitted"
+                        SuggestionChosen="AutoSuggestBox_SuggestionChosen"
+                        Grid.Row="3"
+                        Grid.Column="1">
+            <AutoSuggestBox.ItemTemplate>
+                <DataTemplate x:DataType="models:RdlnCategory">
+                    <TextBlock Text="{x:Bind Name}"
+                               Style="{StaticResource ValueTextBlockStyle}"/>
+                </DataTemplate>
+            </AutoSuggestBox.ItemTemplate>
+        </AutoSuggestBox>
     </Grid>
 </ContentDialog>
