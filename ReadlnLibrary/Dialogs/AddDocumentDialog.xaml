@@ -6,85 +6,100 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:ReadlnLibrary.Core.Models"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:models1="using:ReadlnLibrary.Models"
+    xmlns:templateselectors="using:ReadlnLibrary.TemplateSelectors"
     mc:Ignorable="d"
     Title="Document"
     PrimaryButtonText="Save"
     SecondaryButtonText="Cancel">
     <ContentDialog.Resources>
         <Style TargetType="TextBox" x:Key="ValueTextBoxStyle">
+            <Setter Property="Margin" Value="10"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="180"/>
+        </Style>
+        <Style TargetType="TextBox" x:Key="LabelTextBoxStyle">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="100"/>
         </Style>
         <Style TargetType="AutoSuggestBox" x:Key="ValueAutoTextBoxStyle">
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="Margin" Value="10"/>
         </Style>
         <Style TargetType="TextBlock" x:Key="ValueTextBlockStyle">
+            <Setter Property="Margin" Value="10"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="100"/>
         </Style>
+        <DataTemplate x:Key="FieldTemplate" x:DataType="models1:Field">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock  x:Name="TextBlockAuthor"
+                    Style="{StaticResource ValueTextBlockStyle}"
+                    Text="{x:Bind Label}"/>
+                <TextBox x:Name="TextBoxAuthor"
+                 Style="{StaticResource ValueTextBoxStyle}"
+                 Text="{x:Bind Value, Mode=TwoWay}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="NewFieldTemplate" x:DataType="models1:Field">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox  x:Name="TextBlockAuthor"
+                    Style="{StaticResource LabelTextBoxStyle}"
+                    Text="{x:Bind Label, Mode=TwoWay}"/>
+                <TextBox x:Name="TextBoxAuthor"
+                 Style="{StaticResource ValueTextBoxStyle}"
+                 Text="{x:Bind Value, Mode=TwoWay}"/>
+            </StackPanel>
+        </DataTemplate>
+        <templateselectors:FieldTemplateSelector x:Key="FieldTemplateSelector"
+                                                 FieldTemplate="{StaticResource FieldTemplate}"
+                                                 NewFieldTemplate="{StaticResource NewFieldTemplate}"
+                                                 />
     </ContentDialog.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="TextBlockFileName"
-                   x:Uid="TextBlockFileName"
-                   Style="{StaticResource ValueTextBlockStyle}"
-                   Text="File Name"/>
-        <TextBlock x:Name="TextBlockFileNameValue"
-                   Style="{StaticResource ValueTextBlockStyle}"
-                   Text="{x:Bind DocumentName, Mode=OneWay}"
-                   Grid.Column="1"/>
-        <TextBlock  x:Name="TextBlockTitle"
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Grid.ColumnSpan="2">
+            <TextBlock  x:Name="TextBlockCategory"
                     Style="{StaticResource ValueTextBlockStyle}"
-                    Text="Title"
-                    Grid.Row="1"/>
-        <TextBox x:Name="TextBoxTitle"
-                 Style="{StaticResource ValueTextBoxStyle}"
-                 Text="{x:Bind DocumentTitle, Mode=TwoWay}"
-                 Grid.Column="1"
-                 Grid.Row="1"/>
-        <TextBlock  x:Name="TextBlockAuthor"
-                    Style="{StaticResource ValueTextBlockStyle}"
-                    Text="Author"
-                    Grid.Row="2"/>
-        <TextBox x:Name="TextBoxAuthor"
-                 Style="{StaticResource ValueTextBoxStyle}"
-                 Text="{x:Bind DocumentAuthor, Mode=TwoWay}"
-                 Grid.Column="1"
-                 Grid.Row="2"/>
-        <TextBlock  x:Name="TextBlockCategory"
-                    Style="{StaticResource ValueTextBlockStyle}"
-                    Text="Category"
-                    Grid.Row="3"/>
-        <!--<TextBox x:Name="TextBoxCategory"
-                 Style="{StaticResource ValueTextBoxStyle}"
-                 Text="{x:Bind DocumentCategory, Mode=TwoWay}"
-                 Grid.Column="1"
-                 Grid.Row="3"/>-->
-        <AutoSuggestBox x:Name="ASBCategory"
+                    Text="Category"/>
+            <AutoSuggestBox x:Name="ASBCategory"
                         Text="{x:Bind DocumentCategory, Mode=TwoWay}"
                         Style="{StaticResource ValueAutoTextBoxStyle}"
                         PlaceholderText="Category"
                         QueryIcon="Find"
-                        Width="200"
                         TextChanged="AutoSuggestBox_TextChanged"
                         QuerySubmitted="AutoSuggestBox_QuerySubmitted"
-                        SuggestionChosen="AutoSuggestBox_SuggestionChosen"
-                        Grid.Row="3"
-                        Grid.Column="1">
-            <AutoSuggestBox.ItemTemplate>
-                <DataTemplate x:DataType="models:RdlnCategory">
-                    <TextBlock Text="{x:Bind Name}"
+                        SuggestionChosen="AutoSuggestBox_SuggestionChosen">
+                <AutoSuggestBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"
                                Style="{StaticResource ValueTextBlockStyle}"/>
-                </DataTemplate>
-            </AutoSuggestBox.ItemTemplate>
-        </AutoSuggestBox>
+                    </DataTemplate>
+                </AutoSuggestBox.ItemTemplate>
+            </AutoSuggestBox>
+        </StackPanel>
+        <ListView ItemsSource="{x:Bind Fields}"
+                  ItemTemplateSelector="{StaticResource FieldTemplateSelector}"
+                  SelectionMode="None"
+                  Grid.Row="1"
+                  Grid.ColumnSpan="2"                                
+                  HorizontalAlignment="Center">
+        </ListView>
+        <Button x:Name="ButtonAddField"
+                Grid.Row="2"
+                HorizontalAlignment="Right"                
+                Click="OnButtonAddFieldClick">
+            <SymbolIcon Symbol="Add"/>
+        </Button>
     </Grid>
 </ContentDialog>

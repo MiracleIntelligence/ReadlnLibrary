@@ -160,6 +160,7 @@
     <Compile Include="Models\DragDropCompletedData.cs" />
     <Compile Include="Models\DragDropData.cs" />
     <Compile Include="Models\DragDropStartingData.cs" />
+    <Compile Include="Models\Field.cs" />
     <Compile Include="Models\ShareSourceData.cs" />
     <Compile Include="Models\ShareSourceItem.cs" />
     <Compile Include="Services\ActivationService.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Services\UserActivityData.cs" />
     <Compile Include="Services\UserActivityService.cs" />
     <Compile Include="Services\UserActivityService.Sample.cs" />
+    <Compile Include="TemplateSelectors\FieldTemplateSelector.cs" />
     <Compile Include="TemplateSelectors\SharedContentTemplateSelector.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SchemeActivationSampleViewModel.cs" />

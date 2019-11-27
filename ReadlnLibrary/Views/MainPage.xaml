@@ -76,8 +76,10 @@
                               IsSourceGrouped="True"/>
         <DataTemplate x:Key="ZoomedOutTemplate" x:DataType="wuxdata:ICollectionViewGroup">
             <TextBlock Text="{Binding Group.Key}"
+                       Width="120"
+                       TextAlignment="Center"
                        Style="{StaticResource SubtitleTextBlockStyle}"
-                       TextWrapping="Wrap"/>
+                       TextWrapping="NoWrap"/>
         </DataTemplate>
     </Page.Resources>
     <Page.TopAppBar>
@@ -141,6 +143,7 @@
                 <SemanticZoom.ZoomedInView>
                     <!-- Put the GridView for the zoomed in view here. -->
                     <GridView x:Name="DocumentsListView"
+                              CanDragItems="True"
                                   ItemsSource="{Binding Source={StaticResource CVSDocs}}"
                                   ItemTemplate="{StaticResource DocTemplate}">
                         <GridView.GroupStyle>
@@ -159,6 +162,7 @@
                     <GridView Name="HeadersListView"
                                   ItemsSource="{x:Bind CVSDocs.View.CollectionGroups, Mode=OneWay}"
                                   SelectionMode="None"
+                              
                                   ItemTemplate="{StaticResource ZoomedOutTemplate}" />
                 </SemanticZoom.ZoomedOutView>
             </SemanticZoom>

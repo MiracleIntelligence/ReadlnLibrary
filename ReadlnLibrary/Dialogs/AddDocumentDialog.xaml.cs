@@ -1,65 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using Newtonsoft.Json;
 using ReadlnLibrary.Core.Models;
-using ReadlnLibrary.ViewModels;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using ReadlnLibrary.Managers;
+using ReadlnLibrary.Models;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-
-// The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace ReadlnLibrary.Dialogs
 {
     public sealed partial class AddDocumentDialog : ContentDialog
     {
-
-
-
-        public string DocumentTitle
-        {
-            get { return (string)GetValue(DocumentTitleProperty); }
-            set { SetValue(DocumentTitleProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty DocumentTitleProperty =
-            DependencyProperty.Register("DocumentTitle", typeof(string), typeof(AddDocumentDialog), new PropertyMetadata(0));
         private List<RdlnCategory> _categories;
-
-        public string DocumentName
-        {
-            get { return (string)GetValue(DocumentNameProperty); }
-            set { SetValue(DocumentNameProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for DocumentName.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty DocumentNameProperty =
-            DependencyProperty.Register("DocumentName", typeof(string), typeof(AddDocumentDialog), new PropertyMetadata(0));
-
-
-
-
-        public string DocumentAuthor
-        {
-            get { return (string)GetValue(DocumentAuthorProperty); }
-            set { SetValue(DocumentAuthorProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for DocumentAuthor.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty DocumentAuthorProperty =
-            DependencyProperty.Register("DocumentAuthor", typeof(string), typeof(AddDocumentDialog), new PropertyMetadata(0));
-
-
-
 
         public string DocumentCategory
         {
@@ -72,23 +27,32 @@ namespace ReadlnLibrary.Dialogs
             DependencyProperty.Register("DocumentCategory", typeof(string), typeof(AddDocumentDialog), new PropertyMetadata(0));
 
 
+        public ObservableCollection<Field> Fields { get; private set; }
+        private Dictionary<string, string> _knownValues;
 
         public AddDocumentDialog()
         {
+            Fields = new ObservableCollection<Field>();
+
             this.InitializeComponent();
         }
 
         internal void Init(RdlnDocument doc, List<RdlnCategory> categories)
         {
+            if (String.IsNullOrEmpty(doc.RawFields))
+            {
+                _knownValues = new Dictionary<string, string>();
+            }
+            else
+            {
+                _knownValues = JsonConvert.DeserializeObject<Dictionary<string, string>>(doc.RawFields);
+            }
+
             _categories = categories;
 
-            DocumentName = doc.Name;
-            DocumentTitle = doc.Title;
-            DocumentAuthor = doc.Author;
             DocumentCategory = doc.Category;
 
-
-            ASBCategory.ItemsSource = _categories;
+            UpdateFields(DocumentCategory);
         }
 
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -100,8 +64,10 @@ namespace ReadlnLibrary.Dialogs
             {
                 //Set the ItemsSource to be your filtered dataset
                 //sender.ItemsSource = dataset;
-                sender.ItemsSource = _categories?.Where(c => c.Name.Contains(sender.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                sender.ItemsSource = _categories?.Where(c => c.Name != null && c.Name.Contains(sender.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();
             }
+
+            ButtonAddField.Visibility = String.IsNullOrEmpty(DocumentCategory) ? Visibility.Visible : Visibility.Collapsed;
         }
 
 
@@ -109,6 +75,7 @@ namespace ReadlnLibrary.Dialogs
         {
             // Set sender.Text. You can use args.SelectedItem to build your text string.
             ASBCategory.Text = (args.SelectedItem as RdlnCategory)?.Name;
+            UpdateFields(ASBCategory.Text);
         }
 
 
@@ -122,6 +89,51 @@ namespace ReadlnLibrary.Dialogs
             {
                 // Use args.QueryText to determine what to do.
             }
+        }
+
+        private void UpdateFields(string categoryName)
+        {
+            List<Field> fields;
+            if (!String.IsNullOrEmpty(categoryName))
+            {
+                var category = DatabaseManager.Connection.Get<RdlnCategory>(c => c.Name == categoryName);
+                if (category != null)
+                {
+                    var rdlnfields = DatabaseManager.Connection.Table<RdlnField>().Where(f => f.Category == categoryName).ToList();
+                    fields = rdlnfields.Select(r => new Field(r.Name, _knownValues.ContainsKey(r.Name) ? _knownValues[r.Name] : null)).ToList();
+
+                    Fields.Clear();
+                    foreach (var f in fields)
+                    {
+                        Fields.Add(f);
+                    }
+
+                    return;
+                }
+            }
+
+            fields = new List<Field>()
+            {
+                new Field
+                {
+                    Label = "Title",
+                    Value = _knownValues["Title"]
+                },
+                new Field
+                {
+                    Label = "Author",
+                    Value = _knownValues["Author"]
+                }
+                };
+            foreach (var f in fields)
+            {
+                Fields.Add(f);
+            }
+        }
+
+        private void OnButtonAddFieldClick(object sender, RoutedEventArgs e)
+        {
+            Fields.Add(new Field());
         }
     }
 }
