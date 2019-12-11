@@ -61,5 +61,13 @@ namespace ReadlnLibrary
         {
             await ActivationService.ActivateFromShareTargetAsync(args);
         }
+
+        protected override async void OnFileActivated(FileActivatedEventArgs args)
+        {
+            // TODO: Handle file activation
+            // The number of files received is args.Files.Size
+            // The name of the first file is args.Files[0].Name
+            await ActivationService.ActivateAsync(args);
+        }
     }
 }

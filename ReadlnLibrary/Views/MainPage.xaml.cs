@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.UI.Xaml.Controls;
 using ReadlnLibrary.ViewModels;
-
+using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -20,10 +21,14 @@ namespace ReadlnLibrary.Views
             ContentArea.DataContext = ViewModel;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            ViewModel.Initialize();
+            await ViewModel.Initialize();
+            if (e.Parameter is System.Collections.Generic.IReadOnlyList<Windows.Storage.IStorageItem>)
+            {
+                await ViewModel.AddFiles(e.Parameter as IReadOnlyList<IStorageItem>);
+            }
         }
 
         private void OnElementIndexChanged(ItemsRepeater sender, ItemsRepeaterElementIndexChangedEventArgs args)

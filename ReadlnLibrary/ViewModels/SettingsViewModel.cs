@@ -9,6 +9,7 @@ using ReadlnLibrary.Helpers;
 using ReadlnLibrary.Services;
 
 using Windows.ApplicationModel;
+using Windows.Storage;
 using Windows.UI.Xaml;
 
 namespace ReadlnLibrary.ViewModels
@@ -54,6 +55,35 @@ namespace ReadlnLibrary.ViewModels
             }
         }
 
+
+        private string _settingPattern;
+        public string SettingPattern
+        {
+            get { return _settingPattern; }
+            set { Set(ref _settingPattern, value); }
+        }
+
+        private ICommand _savePatternCommand;
+
+        public ICommand SavePatternCommand
+        {
+            get
+            {
+                if (_savePatternCommand == null)
+                {
+                    _savePatternCommand = new RelayCommand(
+                        async () =>
+                        {
+                            await SavePattern(SettingPattern);
+                        });
+                }
+
+                return _savePatternCommand;
+            }
+        }
+
+
+
         public SettingsViewModel()
         {
         }
@@ -61,7 +91,27 @@ namespace ReadlnLibrary.ViewModels
         public async Task InitializeAsync()
         {
             VersionDescription = GetVersionDescription();
-            await Task.CompletedTask;
+            SettingPattern = await GetSettingPattern();
+        }
+        private async Task SavePattern(string settingPattern)
+        {
+            await ApplicationData.Current.LocalFolder.SaveAsync(Constants.Settings.PATTERN, settingPattern).ConfigureAwait(false);
+
+        }
+        private async Task<string> GetSettingPattern()
+        {
+            string pattern = null;
+            try
+            {
+                pattern = await ApplicationData.Current.LocalFolder.ReadAsync<string>(Constants.Settings.PATTERN).ConfigureAwait(false);
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return pattern;
+
         }
 
         private string GetVersionDescription()

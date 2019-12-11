@@ -11,6 +11,7 @@ namespace ReadlnLibrary
         public class Settings
         {
             public const string ORDER = "Order";
+            public const string PATTERN = "Pattern";
         }
 
         public class GroupCategories

@@ -133,6 +133,7 @@ namespace ReadlnLibrary.Services
 
         private IEnumerable<ActivationHandler> GetActivationHandlers()
         {
+            yield return Singleton<FileActivationHandler>.Instance;
             yield return Singleton<SchemeActivationHandler>.Instance;
             yield return Singleton<ShareTargetActivationHandler>.Instance;
             yield return Singleton<SuspendAndResumeService>.Instance;
@@ -149,6 +150,15 @@ namespace ReadlnLibrary.Services
             if (shareTargetHandler != null)
             {
                 await shareTargetHandler.HandleAsync(activationArgs);
+            }
+        }
+
+        internal async Task ActivateFromFileAsync(FileActivatedEventArgs activationArgs)
+        {
+            var fileActivationHandler = GetActivationHandlers().FirstOrDefault(h => h.CanHandle(activationArgs));
+            if (fileActivationHandler != null)
+            {
+                await fileActivationHandler.HandleAsync(activationArgs);
             }
         }
     }

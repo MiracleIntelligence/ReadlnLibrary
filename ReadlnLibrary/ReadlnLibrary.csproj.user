@@ -10,7 +10,7 @@
     <SplashScreenSource>C:\dev\MI\Projects\Readln\Resources\Logo.png</SplashScreenSource>
     <PackageLogoSource>C:\dev\MI\Projects\Readln\Resources\Logo.png</PackageLogoSource>
     <ProjectView>ShowAllFiles</ProjectView>
-    <AppxShowAllApps>False</AppxShowAllApps>
+    <AppxShowAllApps>True</AppxShowAllApps>
     <UapAppxPackageBuildMode>StoreOnly</UapAppxPackageBuildMode>
     <AppxBuildConfigurationSelection>x86|x64|arm</AppxBuildConfigurationSelection>
     <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>

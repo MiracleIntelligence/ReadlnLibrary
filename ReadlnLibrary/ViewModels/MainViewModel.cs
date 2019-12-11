@@ -16,6 +16,8 @@ using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ReadlnLibrary.Views;
+using System.IO;
 
 namespace ReadlnLibrary.ViewModels
 {
@@ -28,6 +30,7 @@ namespace ReadlnLibrary.ViewModels
         public ICommand RemoveDocCommand { get; private set; }
         public ICommand EditDocCommand { get; private set; }
         public ICommand SetGroupCommand { get; private set; }
+        public ICommand SettingsCommand { get; private set; }
 
         public GroupedObservableCollection<string, RdlnDocument> GroupedDocuments { get; private set; }
         public bool LibraryIsEmpty => !(GroupedDocuments?.Count > 0);
@@ -40,6 +43,12 @@ namespace ReadlnLibrary.ViewModels
             RemoveDocCommand = new RelayCommand<RdlnDocument>(RemoveDoc);
             EditDocCommand = new RelayCommand<RdlnDocument>(EditDoc);
             SetGroupCommand = new RelayCommand<string>(SetGroup);
+            SettingsCommand = new RelayCommand(GoToSettings);
+        }
+
+        private void GoToSettings()
+        {
+            ViewModelLocator.Current.NavigationService.Navigate(typeof(SettingsViewModel).FullName);
         }
 
         private async void SetGroup(string order)
@@ -145,22 +154,6 @@ namespace ReadlnLibrary.ViewModels
                         RaisePropertyChanged(nameof(LibraryIsEmpty));
                     }
                 }
-
-                // Launch the retrieved file
-                //var success = await Windows.System.Launcher.LaunchFileAsync(file);
-
-                //if (success)
-                //{
-                //    // File launched
-                //}
-                //else
-                //{
-                //    // File launch failed
-                //}
-            }
-            else
-            {
-                // Could not find file
             }
         }
 
@@ -186,18 +179,118 @@ namespace ReadlnLibrary.ViewModels
             }
         }
 
-        internal async void Initialize()
+        internal async Task Initialize()
         {
             DatabaseManager.InitConnection();
 
             var docs = DatabaseManager.Connection.Table<RdlnDocument>().ToList();
-            //GroupedDocuments = new GroupedObservableCollection<string, RdlnDocument>(d => { return String.IsNullOrEmpty(d.Title) ? String.Empty : d.Title[0].ToString(CultureInfo.InvariantCulture).ToUpper(CultureInfo.InvariantCulture); }, docs);
+            var group = Constants.GroupCategories.TITLE;
+            try
+            {
+                group = await ApplicationData.Current.LocalFolder.ReadAsync<string>(Constants.Settings.ORDER).ConfigureAwait(true);
 
-            var group = await ApplicationData.Current.LocalFolder.ReadAsync<string>(Constants.Settings.ORDER).ConfigureAwait(true);
-            GroupedDocuments = GetGrouped(docs, group);
+            }
+            finally
+            {
+                GroupedDocuments = GetGrouped(docs, group);
 
-            RaisePropertyChanged(nameof(GroupedDocuments));
-            RaisePropertyChanged(nameof(LibraryIsEmpty));
+                RaisePropertyChanged(nameof(GroupedDocuments));
+                RaisePropertyChanged(nameof(LibraryIsEmpty));
+            }
+        }
+
+        internal async Task AddFiles(IReadOnlyList<IStorageItem> files)
+        {
+            try
+            {
+                if (files.Count > 1)
+                {
+                    foreach (var file in files)
+                    {
+                        await AddFileByPattern(file);
+                    }
+                }
+                else
+                {
+                    if (files.Count == 1)
+                    {
+                        await AddFile(files[0]);
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+
+        internal async Task AddFile(IStorageItem file)
+        {
+            if (file != null)
+            {
+                string faToken = StorageApplicationPermissions.FutureAccessList.Add(file);
+                var document = new RdlnDocument
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Path = file.Path,
+                    Name = file.Name,
+                    Title = file.Name,
+                    Token = faToken
+                };
+
+                var documentWasChanged = await _documentService.FillDocumentData(document).ConfigureAwait(true);
+
+                if (documentWasChanged)
+                {
+                    var count = DatabaseManager.Connection.Insert(document);
+
+                    if (count > 0)
+                    {
+                        GroupedDocuments.Add(document);
+                        RaisePropertyChanged(nameof(LibraryIsEmpty));
+                    }
+                }
+            }
+        }
+
+        internal async Task AddFileByPattern(IStorageItem file)
+        {
+            if (file != null)
+            {
+                string faToken = StorageApplicationPermissions.FutureAccessList.Add(file);
+                var document = new RdlnDocument
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Path = file.Path,
+                    Name = file.Name,
+                    Title = file.Name,
+                    Token = faToken
+                };
+                try
+                {
+                    var pattern = await ApplicationData.Current.LocalFolder.ReadAsync<string>(Constants.Settings.PATTERN).ConfigureAwait(true);
+
+
+                    var documentWasChanged = await _documentService.FillDocumentDataByPattern(document, pattern).ConfigureAwait(true);
+
+                    //if (documentWasChanged)
+                    {
+                        var count = DatabaseManager.Connection.Insert(document);
+
+                        if (count > 0)
+                        {
+                            GroupedDocuments.Add(document);
+                            RaisePropertyChanged(nameof(LibraryIsEmpty));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+
+            }
         }
     }
 }

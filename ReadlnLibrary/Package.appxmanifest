@@ -8,11 +8,11 @@
   IgnorableNamespaces="uap mp genTemplate">
 
   <Identity
-    Name="22482MI.RdlnLibraryTest"
-    Publisher="CN=MI"
-    Version="1.0.0.0" />
+    Name="22482MI.RdlnLibrary.TEST"
+    Publisher="CN=545DCFBE-BCC2-431A-AE41-0ADB3A9B1B8E"
+    Version="1.0.5.0" />
 
-  <mp:PhoneIdentity PhoneProductId="14ff5a0d-2bbb-4eb2-8879-bdf72030be1d" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="738b4460-2074-44d5-b4f1-6d6dce96bead" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Rdln Library</DisplayName>
@@ -54,10 +54,36 @@
           </uap:ShareTarget>
         </uap:Extension>
         <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="wtsapp">
+          <uap:Protocol Name="rdln">
             <uap:Logo>Assets\Icon.png</uap:Logo>
             <uap:DisplayName>ReadlnLibrary</uap:DisplayName>
           </uap:Protocol>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="rdln">
+            <uap:SupportedFileTypes>
+              <uap:FileType ContentType="text/plain">.txt</uap:FileType>
+              <uap:FileType ContentType="text/html">.html</uap:FileType>
+              <uap:FileType ContentType="text/richtext">.rtf</uap:FileType>
+              <uap:FileType ContentType="image/jpg">.jpg</uap:FileType>
+              <uap:FileType ContentType="image/jpeg">.jpeg</uap:FileType>
+              <uap:FileType ContentType="image/png">.png</uap:FileType>
+              <uap:FileType ContentType="image/gif">.gif</uap:FileType>
+              <uap:FileType ContentType="text/xml">.xml</uap:FileType>
+              <uap:FileType ContentType="application/msword">.doc</uap:FileType>
+              <uap:FileType ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document">.docx</uap:FileType>
+              <uap:FileType ContentType="application/msword">.dot</uap:FileType>
+              <uap:FileType ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.template">.dotx</uap:FileType>
+              <uap:FileType ContentType="application/vnd.ms-excel">.xls</uap:FileType>
+              <uap:FileType ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">.xlsx</uap:FileType>
+              <uap:FileType ContentType="application/vnd.ms-powerpoint">.ppt</uap:FileType>
+              <uap:FileType ContentType="application/vnd.openxmlformats-officedocument.presentationml.presentation">.pptx</uap:FileType>
+              <uap:FileType ContentType="application/pdf">.pdf</uap:FileType>
+            </uap:SupportedFileTypes>
+            <uap:Logo>Logo.png</uap:Logo>
+            <uap:DisplayName>Rdln Library</uap:DisplayName>
+            <uap:EditFlags OpenIsSafe="true"/>
+          </uap:FileTypeAssociation>
         </uap:Extension>
       </Extensions>
     </Application>
