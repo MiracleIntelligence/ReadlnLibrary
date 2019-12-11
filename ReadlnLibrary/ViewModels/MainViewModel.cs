@@ -203,18 +203,21 @@ namespace ReadlnLibrary.ViewModels
         {
             try
             {
-                if (files.Count > 1)
+                //if (files.Count > 1)
+                //{
+                //    foreach (var file in files)
+                //    {
+                //        await AddFileByPattern(file);
+                //    }
+                //}
+                //else
                 {
-                    foreach (var file in files)
+                    if (files.Count > 0)
                     {
-                        await AddFileByPattern(file);
-                    }
-                }
-                else
-                {
-                    if (files.Count == 1)
-                    {
-                        await AddFile(files[0]);
+                        foreach (var file in files)
+                        {
+                            await AddFile(file).ConfigureAwait(false);
+                        }
                     }
                 }
             }

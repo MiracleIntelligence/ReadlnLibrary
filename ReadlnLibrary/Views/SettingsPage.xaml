@@ -34,11 +34,11 @@
             <StackPanel
             Grid.Row="1"
             x:Name="ContentArea">
-                <TextBlock x:Uid="Settings_Personalization" Style="{ThemeResource SubtitleTextBlockStyle}" />
+                <!--<TextBlock x:Uid="Settings_Personalization" Style="{ThemeResource SubtitleTextBlockStyle}" />-->
                 <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
-                    <TextBlock x:Uid="Settings_Pattern"/>
+                    <!--<TextBlock x:Uid="Settings_Pattern"/>
                     <TextBox x:Name="TextBoxPattern" Text="{x:Bind ViewModel.SettingPattern, Mode=TwoWay}"/>
-                    <Button x:Uid="ButtonPatter" Content="Save Pattern" Command="{x:Bind ViewModel.SavePatternCommand}"/>
+                    <Button x:Uid="ButtonPatter" Content="Save Pattern" Command="{x:Bind ViewModel.SavePatternCommand}"/>-->
                     <!--<TextBlock x:Uid="Settings_Theme" />
 
                     <StackPanel Margin="{StaticResource XSmallTopMargin}">
