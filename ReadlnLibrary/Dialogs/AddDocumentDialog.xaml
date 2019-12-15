@@ -91,6 +91,8 @@
         <ListView ItemsSource="{x:Bind Fields}"
                   ItemTemplateSelector="{StaticResource FieldTemplateSelector}"
                   SelectionMode="None"
+                  ScrollViewer.VerticalScrollMode="Disabled"
+                  CanDragItems="False"
                   Grid.Row="1"
                   Grid.ColumnSpan="2"                                
                   HorizontalAlignment="Center">
