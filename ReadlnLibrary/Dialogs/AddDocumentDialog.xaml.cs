@@ -64,7 +64,8 @@ namespace ReadlnLibrary.Dialogs
             {
                 //Set the ItemsSource to be your filtered dataset
                 //sender.ItemsSource = dataset;
-                sender.ItemsSource = _categories?.Where(c => c.Name != null && c.Name.Contains(sender.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                var hints = _categories?.Where(c => c.Name != null && c.Name.Contains(sender.Text, StringComparison.InvariantCultureIgnoreCase)).Select(c => c.Name).ToList();
+                sender.ItemsSource = hints;
             }
 
             ButtonAddField.Visibility = String.IsNullOrEmpty(DocumentCategory) ? Visibility.Visible : Visibility.Collapsed;
@@ -74,7 +75,7 @@ namespace ReadlnLibrary.Dialogs
         private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             // Set sender.Text. You can use args.SelectedItem to build your text string.
-            ASBCategory.Text = (args.SelectedItem as RdlnCategory)?.Name;
+            ASBCategory.Text = (args.SelectedItem as string);
             UpdateFields(ASBCategory.Text);
         }
 

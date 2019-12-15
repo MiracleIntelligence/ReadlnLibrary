@@ -82,7 +82,7 @@
                         SuggestionChosen="AutoSuggestBox_SuggestionChosen">
                 <AutoSuggestBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}"
+                        <TextBlock Text="{Binding}"
                                Style="{StaticResource ValueTextBlockStyle}"/>
                     </DataTemplate>
                 </AutoSuggestBox.ItemTemplate>
