@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.UI.Xaml.Controls;
+using ReadlnLibrary.Core.Models;
 using ReadlnLibrary.Services;
 using ReadlnLibrary.ViewModels;
 using Windows.ApplicationModel.DataTransfer;
@@ -24,9 +25,11 @@ namespace ReadlnLibrary.Views
         {
             InitializeComponent();
             ContentArea.DataContext = ViewModel;
+
+            ViewModel.DocumentAdded += OnDocumentAdded;
         }
 
-        private void OnGroupedDocumentsCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void OnDocumentAdded(object sender, RdlnDocument e)
         {
             SetGroupingButtons();
         }
@@ -36,7 +39,7 @@ namespace ReadlnLibrary.Views
             base.OnNavigatedTo(e);
             await ViewModel.Initialize();
 
-            ViewModel.GroupedDocuments.CollectionChanged += OnGroupedDocumentsCollectionChanged;
+            SetGroupingButtons();
 
             if (e.Parameter is System.Collections.Generic.IReadOnlyList<Windows.Storage.IStorageItem>)
             {
@@ -103,6 +106,12 @@ namespace ReadlnLibrary.Views
             var fields = SimpleIoc.Default.GetInstance<DocumentService>().GetFields();
 
             CommandBarTop.SecondaryCommands.Clear();
+
+            CommandBarTop.SecondaryCommands.Add(new AppBarButton
+            {
+                Label = $"group by {Constants.GroupCategories.CATEGORY}",
+                Command = ViewModel.SetGroupCommand
+            });
 
             foreach (var field in fields)
             {

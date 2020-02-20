@@ -23,6 +23,10 @@ namespace ReadlnLibrary.Core.Models
 
         public string GetRawFieldValue(string order)
         {
+            if (String.IsNullOrEmpty(order))
+            {
+                throw new ArgumentNullException(nameof(order));
+            }
             var fields = JsonConvert.DeserializeObject<Dictionary<string, string>>(RawFields);
             if (fields.ContainsKey(order))
             {

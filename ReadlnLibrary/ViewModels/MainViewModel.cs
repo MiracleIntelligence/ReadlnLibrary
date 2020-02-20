@@ -47,6 +47,8 @@ namespace ReadlnLibrary.ViewModels
             SettingsCommand = new RelayCommand(GoToSettings);
         }
 
+        public event EventHandler<RdlnDocument> DocumentAdded;
+
         private void GoToSettings()
         {
             ViewModelLocator.Current.NavigationService.Navigate(typeof(SettingsViewModel).FullName);
@@ -70,7 +72,14 @@ namespace ReadlnLibrary.ViewModels
         {
             GroupedObservableCollection<string, RdlnDocument> groups = null;
 
-            groups = new GroupedObservableCollection<string, RdlnDocument>(d => { return d.GetRawFieldValue(order) ?? string.Empty; }, documents);
+            if (String.IsNullOrEmpty(order))
+            {
+                groups = new GroupedObservableCollection<string, RdlnDocument>(d => { return d.Category == null ? string.Empty : d.Category; }, documents);
+            }
+            else
+            {
+                groups = new GroupedObservableCollection<string, RdlnDocument>(d => { return d.GetRawFieldValue(order) ?? string.Empty; }, documents);
+            }
             //switch (order)
             //{
             //    case Constants.GroupCategories.AUTHOR:
@@ -138,31 +147,7 @@ namespace ReadlnLibrary.ViewModels
             var file = await openPicker.PickSingleFileAsync();
 
 
-            if (file != null)
-            {
-                string faToken = StorageApplicationPermissions.FutureAccessList.Add(file);
-                var document = new RdlnDocument
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Path = file.Path,
-                    Name = file.Name,
-                    Title = file.DisplayName,
-                    Token = faToken
-                };
-
-                var documentWasChanged = await _documentService.FillDocumentDataAsync(document).ConfigureAwait(true);
-
-                if (documentWasChanged)
-                {
-                    var count = DatabaseManager.Connection.Insert(document);
-
-                    if (count > 0)
-                    {
-                        GroupedDocuments.Add(document);
-                        RaisePropertyChanged(nameof(LibraryIsEmpty));
-                    }
-                }
-            }
+            await AddFileAsync(file);
         }
 
         private async void EditDoc(RdlnDocument document)
@@ -192,7 +177,7 @@ namespace ReadlnLibrary.ViewModels
             DatabaseManager.InitConnection();
 
             var docs = DatabaseManager.Connection.Table<RdlnDocument>().ToList();
-            var group = Constants.GroupCategories.TITLE;
+            var group = Constants.GroupCategories.CATEGORY;
             try
             {
                 group = await ApplicationData.Current.LocalFolder.ReadAsync<string>(Constants.Settings.ORDER).ConfigureAwait(true);
@@ -224,7 +209,7 @@ namespace ReadlnLibrary.ViewModels
                     {
                         foreach (var file in files)
                         {
-                            await AddFile(file).ConfigureAwait(false);
+                            await AddFileAsync(file).ConfigureAwait(false);
                         }
                     }
                 }
@@ -236,7 +221,7 @@ namespace ReadlnLibrary.ViewModels
         }
 
 
-        internal async Task AddFile(IStorageItem file)
+        internal async Task AddFileAsync(IStorageItem file)
         {
             if (file != null)
             {
@@ -259,6 +244,9 @@ namespace ReadlnLibrary.ViewModels
                     if (count > 0)
                     {
                         GroupedDocuments.Add(document);
+
+                        DocumentAdded?.Invoke(this, document);
+
                         RaisePropertyChanged(nameof(LibraryIsEmpty));
                     }
                 }
