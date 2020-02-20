@@ -69,18 +69,20 @@ namespace ReadlnLibrary.ViewModels
         private GroupedObservableCollection<string, RdlnDocument> GetGrouped(IEnumerable<RdlnDocument> documents, string order)
         {
             GroupedObservableCollection<string, RdlnDocument> groups = null;
-            switch (order)
-            {
-                case Constants.GroupCategories.AUTHOR:
-                    groups = new GroupedObservableCollection<string, RdlnDocument>(d => { return d.Author == null ? string.Empty : d.Author; }, documents);
-                    break;
-                case Constants.GroupCategories.CATEGORY:
-                    groups = new GroupedObservableCollection<string, RdlnDocument>(d => { return d.Category == null ? string.Empty : d.Category; }, documents);
-                    break;
-                default:
-                    groups = new GroupedObservableCollection<string, RdlnDocument>(d => { return d.Title == null ? String.Empty : d.Title[0].ToString(CultureInfo.InvariantCulture).ToUpper(CultureInfo.InvariantCulture); }, documents);
-                    break;
-            }
+
+            groups = new GroupedObservableCollection<string, RdlnDocument>(d => { return d.GetRawFieldValue(order) ?? string.Empty; }, documents);
+            //switch (order)
+            //{
+            //    case Constants.GroupCategories.AUTHOR:
+            //        groups = new GroupedObservableCollection<string, RdlnDocument>(d => { return d.Author == null ? string.Empty : d.Author; }, documents);
+            //        break;
+            //    case Constants.GroupCategories.CATEGORY:
+            //        groups = new GroupedObservableCollection<string, RdlnDocument>(d => { return d.Category == null ? string.Empty : d.Category; }, documents);
+            //        break;
+            //    default:
+            //        groups = new GroupedObservableCollection<string, RdlnDocument>(d => { return d.Title == null ? String.Empty : d.Title[0].ToString(CultureInfo.InvariantCulture).ToUpper(CultureInfo.InvariantCulture); }, documents);
+            //        break;
+            //}
             return groups;
         }
 
@@ -148,7 +150,7 @@ namespace ReadlnLibrary.ViewModels
                     Token = faToken
                 };
 
-                var documentWasChanged = await _documentService.FillDocumentData(document).ConfigureAwait(true);
+                var documentWasChanged = await _documentService.FillDocumentDataAsync(document).ConfigureAwait(true);
 
                 if (documentWasChanged)
                 {
@@ -169,7 +171,7 @@ namespace ReadlnLibrary.ViewModels
             {
                 try
                 {
-                    var documentWasChanged = await _documentService.FillDocumentData(document).ConfigureAwait(true);
+                    var documentWasChanged = await _documentService.FillDocumentDataAsync(document).ConfigureAwait(true);
 
                     if (documentWasChanged)
                     {
@@ -248,7 +250,7 @@ namespace ReadlnLibrary.ViewModels
                     Token = faToken
                 };
 
-                var documentWasChanged = await _documentService.FillDocumentData(document).ConfigureAwait(true);
+                var documentWasChanged = await _documentService.FillDocumentDataAsync(document).ConfigureAwait(true);
 
                 if (documentWasChanged)
                 {
@@ -281,7 +283,7 @@ namespace ReadlnLibrary.ViewModels
                     var pattern = await ApplicationData.Current.LocalFolder.ReadAsync<string>(Constants.Settings.PATTERN).ConfigureAwait(true);
 
 
-                    var documentWasChanged = await _documentService.FillDocumentDataByPattern(document, pattern).ConfigureAwait(true);
+                    var documentWasChanged = await _documentService.FillDocumentDataByPatternAsync(document, pattern).ConfigureAwait(true);
 
                     //if (documentWasChanged)
                     {

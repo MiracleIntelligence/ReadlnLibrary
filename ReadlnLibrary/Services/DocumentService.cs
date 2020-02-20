@@ -14,7 +14,7 @@ namespace ReadlnLibrary.Services
 {
     public class DocumentService
     {
-        public async Task<bool> FillDocumentData(RdlnDocument doc)
+        public async Task<bool> FillDocumentDataAsync(RdlnDocument doc)
         {
             if (doc == null)
             {
@@ -78,7 +78,7 @@ namespace ReadlnLibrary.Services
         }
 
 
-        public async Task<bool> FillDocumentDataByPattern(RdlnDocument doc, string pattern)
+        public async Task<bool> FillDocumentDataByPatternAsync(RdlnDocument doc, string pattern)
         {
             if (doc == null)
             {
@@ -163,5 +163,12 @@ namespace ReadlnLibrary.Services
             return fillResult;
         }
 
+        public IEnumerable<RdlnField> GetFields()
+        {
+            var rdlnfields = DatabaseManager.Connection.Table<RdlnField>().ToList();
+            var fields = rdlnfields.GroupBy(f => f.Name).Select(list => list.FirstOrDefault());
+
+            return fields;
+        }
     }
 }

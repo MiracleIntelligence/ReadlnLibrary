@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using GalaSoft.MvvmLight.Ioc;
 using Microsoft.UI.Xaml.Controls;
+using ReadlnLibrary.Services;
 using ReadlnLibrary.ViewModels;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
@@ -23,10 +26,18 @@ namespace ReadlnLibrary.Views
             ContentArea.DataContext = ViewModel;
         }
 
+        private void OnGroupedDocumentsCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            SetGroupingButtons();
+        }
+
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             await ViewModel.Initialize();
+
+            ViewModel.GroupedDocuments.CollectionChanged += OnGroupedDocumentsCollectionChanged;
+
             if (e.Parameter is System.Collections.Generic.IReadOnlyList<Windows.Storage.IStorageItem>)
             {
                 await ViewModel.AddFiles(e.Parameter as IReadOnlyList<IStorageItem>);
@@ -83,6 +94,26 @@ namespace ReadlnLibrary.Views
                     //// Set the image on the main page to the dropped image
                     //Image.Source = bitmapImage;
                 }
+            }
+        }
+
+        private void SetGroupingButtons()
+        {
+            var categories = ViewModel.GroupedDocuments.EnumerateItems().Select(doc => doc.Category);
+            var fields = SimpleIoc.Default.GetInstance<DocumentService>().GetFields();
+
+            CommandBarTop.SecondaryCommands.Clear();
+
+            foreach (var field in fields)
+            {
+                var button = new AppBarButton()
+                {
+                    Label = $"group by {field.Name}",
+                    Command = ViewModel.SetGroupCommand,
+                    CommandParameter = field.Name
+                };
+
+                CommandBarTop.SecondaryCommands.Add(button);
             }
         }
     }
