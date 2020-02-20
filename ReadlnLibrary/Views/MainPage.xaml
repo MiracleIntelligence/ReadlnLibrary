@@ -142,6 +142,9 @@
             </Grid>
         </Grid>
         <Grid x:Name="DefaultScreen"
+              AllowDrop="True"
+              DragOver="DefaultScreen_DragOver"
+              Drop="DefaultScreen_Drop"
               Visibility="{x:Bind ViewModel.LibraryIsEmpty, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}"
               Margin="15">
             <SemanticZoom>

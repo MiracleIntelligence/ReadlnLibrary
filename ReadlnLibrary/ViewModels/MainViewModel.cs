@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ReadlnLibrary.Views;
 using System.IO;
+using Windows.UI.Popups;
 
 namespace ReadlnLibrary.ViewModels
 {
@@ -112,6 +113,11 @@ namespace ReadlnLibrary.ViewModels
                 {
                     var file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(doc.Token);
                     var success = await Windows.System.Launcher.LaunchFileAsync(file);
+                }
+                catch (FileNotFoundException ex)
+                {
+                    var dialog = new MessageDialog("File cannot be open. It was moved or deleted.", "File not found");
+                    Debug.WriteLine(ex);
                 }
                 catch (Exception ex)
                 {

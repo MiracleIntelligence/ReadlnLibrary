@@ -6,7 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:templateSelectors="using:ReadlnLibrary.TemplateSelectors"
     xmlns:viewModels="using:ReadlnLibrary.ViewModels"
-    Style="{StaticResource PageStyle}"
+    Style="{StaticResource PageStyle}"    
+    RequestedTheme="Dark"
     mc:Ignorable="d">
     <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
 

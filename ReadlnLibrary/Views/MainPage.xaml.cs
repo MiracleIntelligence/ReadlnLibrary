@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using Microsoft.UI.Xaml.Controls;
 using ReadlnLibrary.ViewModels;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace ReadlnLibrary.Views
@@ -60,6 +62,28 @@ namespace ReadlnLibrary.Views
         private void DocFlyoutButtonClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             DocFlyout.Hide();
+        }
+
+        private void DefaultScreen_DragOver(object sender, Windows.UI.Xaml.DragEventArgs e)
+        {
+            e.AcceptedOperation = DataPackageOperation.Copy;
+        }
+
+        private async void DefaultScreen_Drop(object sender, Windows.UI.Xaml.DragEventArgs e)
+        {
+            if (e.DataView.Contains(StandardDataFormats.StorageItems))
+            {
+                var items = await e.DataView.GetStorageItemsAsync();
+                if (items.Count > 0)
+                {
+                    //var storageFile = items[0] as StorageFile;
+                    await ViewModel.AddFiles(items).ConfigureAwait(false);
+                    //var bitmapImage = new BitmapImage();
+                    //bitmapImage.SetSource(await storageFile.OpenAsync(FileAccessMode.Read));
+                    //// Set the image on the main page to the dropped image
+                    //Image.Source = bitmapImage;
+                }
+            }
         }
     }
 }
