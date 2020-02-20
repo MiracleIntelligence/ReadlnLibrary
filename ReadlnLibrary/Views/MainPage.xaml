@@ -106,7 +106,11 @@
             </CommandBar.Content>
         </CommandBar>
     </Page.TopAppBar>
-    <Grid x:Uid="ContentArea" x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
+    <Grid x:Uid="ContentArea" x:Name="ContentArea"          
+              AllowDrop="True"
+              DragOver="DefaultScreen_DragOver"
+              Drop="DefaultScreen_Drop"
+          Margin="{StaticResource MediumLeftRightMargin}">
         <Grid x:Name="FirstScreen"
               x:Load="{x:Bind ViewModel.LibraryIsEmpty, Mode=OneWay}"
               Background="Black">
@@ -142,9 +146,6 @@
             </Grid>
         </Grid>
         <Grid x:Name="DefaultScreen"
-              AllowDrop="True"
-              DragOver="DefaultScreen_DragOver"
-              Drop="DefaultScreen_Drop"
               Visibility="{x:Bind ViewModel.LibraryIsEmpty, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}"
               Margin="15">
             <SemanticZoom>
