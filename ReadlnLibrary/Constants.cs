@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ReadlnLibrary
+﻿namespace ReadlnLibrary
 {
     class Constants
     {
@@ -19,6 +13,11 @@ namespace ReadlnLibrary
             public const string CATEGORY = "Category";
             public const string TITLE = "Title";
             public const string AUTHOR = "Author";
+        }
+
+        public class FieldType
+        {
+            public const string String = "string";
         }
     }
 }

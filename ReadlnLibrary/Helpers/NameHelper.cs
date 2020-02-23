@@ -6,21 +6,32 @@ using System.Threading.Tasks;
 
 namespace ReadlnLibrary.Helpers
 {
-    public class NameHelper
+    public static class NameHelper
     {
-        public const string PATTERN = @"Title,Author";
-        public const string DELIMITER = @"_";
+        //public const string PATTERN = @"Title,Author";
+        //public const string DELIMITER = @"_";
 
-        public static Dictionary<string, string> GetFieldsByPattern(string value, string pattern)
+        public static Dictionary<string, string> GetFieldsByPattern(string value, string pattern, string delimiter)
         {
             var result = new Dictionary<string, string>();
-            var values = value.Split(DELIMITER);
-            var properties = pattern.Split(DELIMITER);
-            for (int i = 0; i < properties.Length; ++i)
+            var values = value.Split(delimiter);
+            var properties = pattern.Split(delimiter);
+            int i = 0;
+            foreach (var property in properties)
             {
                 if (value.Length > i)
                 {
-                    result.Add(properties[i], values[i]);
+                    if (property.Contains("=", StringComparison.InvariantCulture))
+                    {
+                        var propPair = property.Split("=");
+                        if (propPair.Length > 1)
+                        {
+                            result.Add(propPair[0], propPair[1]);
+                            continue;
+                        }
+                    }
+                    result.Add(property, values[i]);
+                    i++;
                 }
             }
 

@@ -14,6 +14,7 @@
     RequestedTheme="Dark"
     mc:Ignorable="d">
     <Page.Resources>
+        <Thickness x:Key="GridViewItemRevealBorderThemeThickness">0</Thickness>
         <Style x:Key="FlyoutButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="150"/>
             <Setter Property="Margin" Value="5"/>
@@ -40,7 +41,8 @@
             </StackPanel>
         </Flyout>
         <DataTemplate x:Key="DocTemplate">
-            <Button Style="{StaticResource ButtonRevealStyle}" Margin="2" ContextFlyout="{StaticResource DocFlyout}" Click="Button_Click">
+            <Button Style="{StaticResource ButtonRevealStyle}" Margin="2"
+                    ContextFlyout="{StaticResource DocFlyout}" Click="Button_Click">
                 <Grid Width="220">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50"/>
@@ -78,7 +80,8 @@
                               IsSourceGrouped="True"/>
         <DataTemplate x:Key="ZoomedOutTemplate" x:DataType="wuxdata:ICollectionViewGroup">
             <TextBlock Text="{Binding Group.Key}"
-                       Width="120"
+                       Width="170"
+                       Margin="5"
                        TextAlignment="Center"
                        Style="{StaticResource SubtitleTextBlockStyle}"
                        TextWrapping="NoWrap"/>
@@ -155,6 +158,11 @@
                               CanDragItems="True"
                                   ItemsSource="{Binding Source={StaticResource CVSDocs}}"
                                   ItemTemplate="{StaticResource DocTemplate}">
+                        <GridView.ItemContainerStyle>
+                            <Style TargetType="GridViewItem">
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Style>
+                        </GridView.ItemContainerStyle>
                         <GridView.GroupStyle>
                             <GroupStyle>
                                 <GroupStyle.HeaderTemplate>

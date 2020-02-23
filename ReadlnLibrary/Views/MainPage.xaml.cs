@@ -115,6 +115,10 @@ namespace ReadlnLibrary.Views
 
             foreach (var field in fields)
             {
+                if (field.Name.Equals(Constants.GroupCategories.CATEGORY, StringComparison.InvariantCulture))
+                {
+                    continue;
+                }
                 var button = new AppBarButton()
                 {
                     Label = $"group by {field.Name}",

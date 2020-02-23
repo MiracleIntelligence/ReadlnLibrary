@@ -154,6 +154,9 @@
     <Compile Include="Dialogs\AddDocumentDialog.xaml.cs">
       <DependentUpon>AddDocumentDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\ContentDialogPattern.xaml.cs">
+      <DependentUpon>ContentDialogPattern.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\DataRequestExtensions.cs" />
     <Compile Include="Helpers\EnumToBooleanConverter.cs" />
     <Compile Include="Helpers\NameHelper.cs" />
@@ -220,6 +223,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\AddDocumentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ContentDialogPattern.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

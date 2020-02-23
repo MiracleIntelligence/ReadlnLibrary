@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+
 using ReadlnLibrary.Core.Models;
 using ReadlnLibrary.Dialogs;
 using ReadlnLibrary.Helpers;
 using ReadlnLibrary.Managers;
-using ReadlnLibrary.Models;
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ReadlnLibrary.Services
 {
@@ -78,7 +79,7 @@ namespace ReadlnLibrary.Services
         }
 
 
-        public async Task<bool> FillDocumentDataByPatternAsync(RdlnDocument doc, string pattern)
+        public bool FillDocumentDataByPattern(RdlnDocument doc, string pattern, string delimiter)
         {
             if (doc == null)
             {
@@ -86,76 +87,67 @@ namespace ReadlnLibrary.Services
             }
 
             var fillResult = false;
-
-            //var dialog = new AddDocumentDialog();
-
             var categories = DatabaseManager.Connection.Table<RdlnCategory>().ToList();
-
-
-            //if (doc.RawFields == null)
-            //{
-            //    var rawFields = new Dictionary<string, string>();
-            //    rawFields.Add("Title", doc.Title);
-            //    rawFields.Add("Author", doc.Author);
-            //    doc.RawFields = JsonConvert.SerializeObject(rawFields);
-            //}
 
             var name = Path.GetFileNameWithoutExtension(doc.Name);
 
-            var fields = NameHelper.GetFieldsByPattern(name, pattern);
-            //if (!fields.ContainsKey("Category"))
-            //{
-            //    fields.Add("Category", "Default");
-            //}
-            doc.RawFields = JsonConvert.SerializeObject(fields);
-            doc.Category = "Default";
+            var fields = NameHelper.GetFieldsByPattern(name, pattern, delimiter);
 
-
-            //dialog.Init(doc, categories);
-
-            //var result = await dialog.ShowAsync();
-            //if (result == Windows.UI.Xaml.Controls.ContentDialogResult.Primary)
+            if (fields != null)
             {
-                if (fields.TryGetValue("Title", out string title))
+                if (!fields.ContainsKey(Constants.GroupCategories.TITLE))
                 {
-                    doc.Title = title;
+                    fields.Add(Constants.GroupCategories.TITLE, doc.Title);
                 }
-
-                if (fields.TryGetValue("Author", out string author))
+                if (!fields.ContainsKey(Constants.GroupCategories.AUTHOR))
                 {
-                    doc.Author = author;
+                    fields.Add(Constants.GroupCategories.AUTHOR, doc.Author);
                 }
+            }
 
-                //if (fields.TryGetValue("Category", out string category))
-                //{
-                //    doc.Category = category;
-                //}
+            doc.RawFields = JsonConvert.SerializeObject(fields);
 
-                //doc.RawFields = JsonConvert.SerializeObject(dialog.Fields.ToDictionary(f => f.Label, f => f.Value));
+            if (!fields.ContainsKey("Category"))
+            {
+                doc.Category = "Default";
+            }
+            else
+            {
+                doc.Category = fields["Category"];
+            }
 
-                if (!categories.Any(c => c.Name == doc.Category))
+            if (fields.TryGetValue("Title", out string title))
+            {
+                doc.Title = title;
+            }
+
+            if (fields.TryGetValue("Author", out string author))
+            {
+                doc.Author = author;
+            }
+
+            if (!categories.Any(c => c.Name == doc.Category))
+            {
+                var newCategory = new RdlnCategory
                 {
-                    var newCategory = new RdlnCategory
+                    Id = Guid.NewGuid().ToString(),
+                    Name = doc.Category
+                };
+
+                DatabaseManager.Connection.Insert(newCategory);
+
+
+                foreach (var field in fields)
+                {
+                    var rdlnField = new RdlnField
                     {
                         Id = Guid.NewGuid().ToString(),
-                        Name = doc.Category
+                        Name = field.Key,
+                        Category = newCategory.Name,
+                        Type = Constants.FieldType.String
                     };
 
-                    DatabaseManager.Connection.Insert(newCategory);
-
-
-                    foreach (var field in fields)
-                    {
-                        var rdlnField = new RdlnField
-                        {
-                            Id = Guid.NewGuid().ToString(),
-                            Name = field.Key,
-                            Category = newCategory.Name,
-                            Type = "string"
-                        };
-
-                        DatabaseManager.Connection.Insert(rdlnField);
-                    }
+                    DatabaseManager.Connection.Insert(rdlnField);
                 }
 
                 fillResult = true;

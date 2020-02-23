@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using ReadlnLibrary.Views;
 using System.IO;
 using Windows.UI.Popups;
+using ReadlnLibrary.Dialogs;
 
 namespace ReadlnLibrary.ViewModels
 {
@@ -78,7 +79,7 @@ namespace ReadlnLibrary.ViewModels
             }
             else
             {
-                groups = new GroupedObservableCollection<string, RdlnDocument>(d => { return d.GetRawFieldValue(order) ?? string.Empty; }, documents);
+                groups = new GroupedObservableCollection<string, RdlnDocument>(d => { return (d.GetRawFieldValue(order) ?? string.Empty).ToUpperInvariant(); }, documents);
             }
             //switch (order)
             //{
@@ -196,20 +197,28 @@ namespace ReadlnLibrary.ViewModels
         {
             try
             {
-                //if (files.Count > 1)
-                //{
-                //    foreach (var file in files)
-                //    {
-                //        await AddFileByPattern(file);
-                //    }
-                //}
-                //else
+                if (files.Count > 0)
                 {
-                    if (files.Count > 0)
+                    string pattern = null;
+                    string delimiter = null;
+
+                    var dialog = new ContentDialogPattern();
+                    var dialogResult = await dialog.ShowAsync();
+                    if (dialogResult == Windows.UI.Xaml.Controls.ContentDialogResult.Primary)
                     {
-                        foreach (var file in files)
+                        pattern = dialog.Pattern;
+                        delimiter = dialog.Delimiter;
+                    }
+
+                    foreach (var file in files)
+                    {
+                        if (String.IsNullOrEmpty(pattern))
                         {
                             await AddFileAsync(file).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            AddFileByPattern(file, pattern, delimiter);
                         }
                     }
                 }
@@ -253,7 +262,7 @@ namespace ReadlnLibrary.ViewModels
             }
         }
 
-        internal async Task AddFileByPattern(IStorageItem file)
+        internal void AddFileByPattern(IStorageItem file, string pattern, string delimiter)
         {
             if (file != null)
             {
@@ -268,10 +277,10 @@ namespace ReadlnLibrary.ViewModels
                 };
                 try
                 {
-                    var pattern = await ApplicationData.Current.LocalFolder.ReadAsync<string>(Constants.Settings.PATTERN).ConfigureAwait(true);
+                    //var pattern = await ApplicationData.Current.LocalFolder.ReadAsync<string>(Constants.Settings.PATTERN).ConfigureAwait(true);
 
 
-                    var documentWasChanged = await _documentService.FillDocumentDataByPatternAsync(document, pattern).ConfigureAwait(true);
+                    var documentWasChanged = _documentService.FillDocumentDataByPattern(document, pattern, delimiter);
 
                     //if (documentWasChanged)
                     {
@@ -280,6 +289,9 @@ namespace ReadlnLibrary.ViewModels
                         if (count > 0)
                         {
                             GroupedDocuments.Add(document);
+
+                            DocumentAdded?.Invoke(this, document);
+
                             RaisePropertyChanged(nameof(LibraryIsEmpty));
                         }
                     }
