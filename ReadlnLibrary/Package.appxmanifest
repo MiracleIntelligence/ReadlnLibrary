@@ -10,7 +10,7 @@
   <Identity
     Name="22482MI.RdlnLibrary"
     Publisher="CN=545DCFBE-BCC2-431A-AE41-0ADB3A9B1B8E"
-    Version="1.0.13.0" />
+    Version="1.0.19.0" />
 
   <mp:PhoneIdentity PhoneProductId="f40de30c-1bb1-4311-8d50-0371b32022ba" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

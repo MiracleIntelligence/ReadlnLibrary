@@ -128,7 +128,8 @@ namespace ReadlnLibrary.ViewModels
                 }
                 catch (FileNotFoundException ex)
                 {
-                    var dialog = new MessageDialog("File cannot be open. It was moved or deleted.", "File not found");
+                    var dialog = new MessageDialog("File cannot be opened. It was moved or deleted.", "File not found");
+                    await dialog.ShowAsync();
                     Debug.WriteLine(ex);
                 }
                 catch (Exception ex)
