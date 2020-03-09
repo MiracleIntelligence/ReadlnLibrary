@@ -9,9 +9,25 @@
     Title="Select Pattern?"
     SecondaryButtonText="Skip">
 
-    <RelativePanel>
+    <RelativePanel Width="300">
+        <TextBlock x:Name="TextBlockDescription"
+                   TextWrapping="WrapWholeWords"
+                   FontWeight="SemiLight"
+                   Margin="10,15">
+            <Run Text="Use template to set attributes based on file name for multiple files. Ex:" Foreground="Black"/>            
+            <LineBreak/>
+            <Run Text="File name: Rdln-logo.png"/>
+            <LineBreak/>
+            <Run Text="Delimiter: '-'"/>
+            <LineBreak/>
+            <Run Text="Template: 'Author-Name'"/>
+            <LineBreak/>
+            <Run Text="Resul: Author set as 'Rdln', Name as 'logo'"/>
+
+        </TextBlock>
         <TextBlock x:Name="TextBlockDelimiter"
-                   Margin="10,15"       
+                   Margin="10,15"
+                   RelativePanel.Below="TextBlockDescription"
                    Text="Set template delimiter :"/>
         <TextBox x:Name="TextBoxDelimiter"
                  MinWidth="30"

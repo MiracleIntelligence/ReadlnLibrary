@@ -1,19 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Source>C:\dev\MI\Projects\Readln\Resources\Logo.png</Source>
-    <SmallTileSource>C:\dev\MI\Projects\Readln\Resources\Logo.png</SmallTileSource>
-    <MediumTileSource>C:\dev\MI\Projects\Readln\Resources\Logo.png</MediumTileSource>
-    <WideTileSource>C:\dev\MI\Projects\Readln\Resources\Logo.png</WideTileSource>
-    <LargeTileSource>C:\dev\MI\Projects\Readln\Resources\Logo.png</LargeTileSource>
-    <AppIconSource>C:\dev\MI\Projects\Readln\Resources\Logo.png</AppIconSource>
-    <SplashScreenSource>C:\dev\MI\Projects\Readln\Resources\Logo.png</SplashScreenSource>
-    <PackageLogoSource>C:\dev\MI\Projects\Readln\Resources\Logo.png</PackageLogoSource>
+    <Source>C:\dev\MI\Projects\Readln\Resources\logo-width-shadow-blur-5-spread-2.png</Source>
+    <SmallTileSource>C:\dev\MI\Projects\Readln\Resources\logo-width-shadow-blur-10-small-tile.png</SmallTileSource>
+    <MediumTileSource>C:\dev\MI\Projects\Readln\Resources\logo-width-shadow-blur-5-spread-2.png</MediumTileSource>
+    <WideTileSource>C:\dev\MI\Projects\Readln\Resources\logo-width-shadow-blur-5-spread-2.png</WideTileSource>
+    <LargeTileSource>C:\dev\MI\Projects\Readln\Resources\logo-width-shadow-blur-5-spread-2.png</LargeTileSource>
+    <AppIconSource>C:\dev\MI\Projects\Readln\Resources\logo-width-shadow-blur-5-spread-2.png</AppIconSource>
+    <SplashScreenSource>C:\dev\MI\Projects\Readln\Resources\logo-width-shadow-blur-5-spread-2.png</SplashScreenSource>
+    <PackageLogoSource>C:\dev\MI\Projects\Readln\Resources\logo-width-shadow-blur-5-spread-2.png</PackageLogoSource>
     <ProjectView>ProjectFiles</ProjectView>
     <AppxShowAllApps>True</AppxShowAllApps>
     <UapAppxPackageBuildMode>StoreOnly</UapAppxPackageBuildMode>
     <AppxBuildConfigurationSelection>x86|x64|arm</AppxBuildConfigurationSelection>
-    <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>
+    <PackageOptionalProjectsInIdeBuilds>True</PackageOptionalProjectsInIdeBuilds>
+    <BadgeLogoSource>C:\dev\MI\Projects\Readln\Resources\logo-width-shadow-blur-5-spread-2.png</BadgeLogoSource>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <DeviceId>30f105c9-681e-420b-a277-7c086ead8a4e</DeviceId>

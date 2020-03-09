@@ -68,7 +68,8 @@ namespace ReadlnLibrary.Dialogs
                 sender.ItemsSource = hints;
             }
 
-            ButtonAddField.Visibility = String.IsNullOrEmpty(DocumentCategory) ? Visibility.Visible : Visibility.Collapsed;
+            var canAddProp = String.IsNullOrEmpty(DocumentCategory) || (_categories != null && !_categories.Any(c => c.Name.Equals(DocumentCategory, StringComparison.InvariantCultureIgnoreCase)));
+            ButtonAddField.Visibility = canAddProp ? Visibility.Visible : Visibility.Collapsed;
         }
 
 
