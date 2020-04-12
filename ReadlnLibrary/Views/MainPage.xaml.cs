@@ -8,6 +8,8 @@ using ReadlnLibrary.Services;
 using ReadlnLibrary.ViewModels;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
+using Windows.Storage.AccessCache;
+using Windows.Storage.FileProperties;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
@@ -127,6 +129,28 @@ namespace ReadlnLibrary.Views
                 };
 
                 CommandBarTop.SecondaryCommands.Add(button);
+            }
+        }
+
+        private async void OnImageThumbnailLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var image = sender as Image;
+            var doc = image.DataContext as RdlnDocument;
+            if (doc != null)
+            {
+                try
+                {
+                    var file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(doc.Token);
+                    StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.DocumentsView, 30, ThumbnailOptions.UseCurrentScale);
+
+                    var imageSource = new BitmapImage();
+                    imageSource.SetSource(thumbnail);
+                    image.Source = imageSource;
+                }
+                catch
+                {
+
+                }
             }
         }
     }
