@@ -134,22 +134,24 @@ namespace ReadlnLibrary.Views
 
         private async void OnImageThumbnailLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            var image = sender as Image;
-            var doc = image.DataContext as RdlnDocument;
-            if (doc != null)
+            if (sender is Image image)
             {
-                try
+                var doc = image.DataContext as RdlnDocument;
+                if (doc != null)
                 {
-                    var file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(doc.Token);
-                    StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.DocumentsView, 30, ThumbnailOptions.UseCurrentScale);
+                    try
+                    {
+                        var file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(doc.Token);
+                        StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.DocumentsView, 30, ThumbnailOptions.UseCurrentScale);
 
-                    var imageSource = new BitmapImage();
-                    imageSource.SetSource(thumbnail);
-                    image.Source = imageSource;
-                }
-                catch
-                {
-                    // We have placeholder image instead
+                        var imageSource = new BitmapImage();
+                        imageSource.SetSource(thumbnail);
+                        image.Source = imageSource;
+                    }
+                    catch
+                    {
+                        // We have placeholder image instead
+                    }
                 }
             }
         }

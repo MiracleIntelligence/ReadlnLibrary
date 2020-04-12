@@ -368,11 +368,13 @@
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
     <MainPackageIdentityName>22482MI.censored</MainPackageIdentityName>
+    <MainPackageIdentityName>22482MI.AnyStatistics</MainPackageIdentityName>
     <MainPackageIdentityName>22482MI.WhatAboutUkraine</MainPackageIdentityName>
     <MainPackageIdentityName>22482MI.BitCloud</MainPackageIdentityName>
     <MainPackageIdentityName>22482MI.CoreStatistic</MainPackageIdentityName>
     <MainPackageIdentityName>22482MI.Readln</MainPackageIdentityName>
     <MainPackageIdentityName>22482MI.ReadlnLibrary</MainPackageIdentityName>
+    <MainPackageIdentityName>22482MI.Seolix</MainPackageIdentityName>
     <MainPackageIdentityName>22482MI.SpringingTasks</MainPackageIdentityName>
     <MainPackageIdentityName>22482MI.124347D074A90</MainPackageIdentityName>
     <MainPackageIdentityName>22482MI.1168C5D0DC86</MainPackageIdentityName>
@@ -384,37 +386,37 @@
       <PackageInfo>
         <OsMinVersion>0.0.0.0</OsMinVersion>
         <PackageArchitecture>X86</PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.0.5.0</PackageMaxArchitectureVersion>
+        <PackageMaxArchitectureVersion>1.0.24.0</PackageMaxArchitectureVersion>
       </PackageInfo>
       <PackageInfo>
         <OsMinVersion>0.0.0.0</OsMinVersion>
         <PackageArchitecture>X64</PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.0.5.0</PackageMaxArchitectureVersion>
+        <PackageMaxArchitectureVersion>1.0.24.0</PackageMaxArchitectureVersion>
       </PackageInfo>
       <PackageInfo>
         <OsMinVersion>0.0.0.0</OsMinVersion>
         <PackageArchitecture>Arm</PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.0.5.0</PackageMaxArchitectureVersion>
+        <PackageMaxArchitectureVersion>1.0.24.0</PackageMaxArchitectureVersion>
       </PackageInfo>
       <PackageInfo>
         <OsMinVersion>0.0.0.0</OsMinVersion>
         <PackageArchitecture>Neutral</PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.0.5.0</PackageMaxArchitectureVersion>
+        <PackageMaxArchitectureVersion>1.0.24.0</PackageMaxArchitectureVersion>
       </PackageInfo>
       <PackageInfo>
         <OsMinVersion>0.0.0.0</OsMinVersion>
         <PackageArchitecture>Neutral</PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.0.5.0</PackageMaxArchitectureVersion>
+        <PackageMaxArchitectureVersion>1.0.24.0</PackageMaxArchitectureVersion>
       </PackageInfo>
       <PackageInfo>
         <OsMinVersion>0.0.0.0</OsMinVersion>
         <PackageArchitecture>Neutral</PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.0.5.0</PackageMaxArchitectureVersion>
+        <PackageMaxArchitectureVersion>1.0.24.0</PackageMaxArchitectureVersion>
       </PackageInfo>
       <PackageInfo>
         <OsMinVersion>0.0.0.0</OsMinVersion>
         <PackageArchitecture>Neutral</PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.0.5.0</PackageMaxArchitectureVersion>
+        <PackageMaxArchitectureVersion>1.0.24.0</PackageMaxArchitectureVersion>
       </PackageInfo>
     </BundleInfo>
   </PackageInfoList>
