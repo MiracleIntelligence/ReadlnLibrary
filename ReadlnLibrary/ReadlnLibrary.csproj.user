@@ -13,7 +13,7 @@
     <AppxShowAllApps>True</AppxShowAllApps>
     <UapAppxPackageBuildMode>StoreOnly</UapAppxPackageBuildMode>
     <AppxBuildConfigurationSelection>x86|x64|arm</AppxBuildConfigurationSelection>
-    <PackageOptionalProjectsInIdeBuilds>True</PackageOptionalProjectsInIdeBuilds>
+    <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>
     <BadgeLogoSource>C:\dev\MI\Projects\Readln\Resources\logo-width-shadow-blur-5-spread-2.png</BadgeLogoSource>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">

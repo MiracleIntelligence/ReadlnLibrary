@@ -149,7 +149,7 @@ namespace ReadlnLibrary.Views
                 }
                 catch
                 {
-
+                    // We have placeholder image instead
                 }
             }
         }

@@ -332,6 +332,7 @@
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="Images\book-icon.png" />
     <Content Include="logo-light.png" />
     <Content Include="logo-width-shadow-blur-5-spread-2.png" />
     <Content Include="Logo.png" />

@@ -64,7 +64,7 @@
                             </Canvas>
                         </Viewbox>-->
                         <Image Width="30" Height="30"
-                               Loaded="OnImageThumbnailLoaded"/>
+                               Loaded="OnImageThumbnailLoaded" Source="/Images/book-icon.png"/>
                     </Grid>
                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
                         <TextBlock Text="{Binding Title}" FontWeight="SemiBold" />
