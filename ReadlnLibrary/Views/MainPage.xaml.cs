@@ -1,11 +1,19 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+
 using GalaSoft.MvvmLight.Ioc;
+
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using Microsoft.UI.Xaml.Controls;
+
 using ReadlnLibrary.Core.Models;
 using ReadlnLibrary.Services;
 using ReadlnLibrary.ViewModels;
+
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
@@ -28,7 +36,34 @@ namespace ReadlnLibrary.Views
             InitializeComponent();
             ContentArea.DataContext = ViewModel;
 
+            TokenBox.TokenItemAdded += TokenItemAdded;
+            TokenBox.TokenItemRemoved += TokenItemRemoved;
+            TokenBox.TextChanged += TokenBox_TextChanged;
+            TokenBox.KeyDown += TokenBox_KeyDown;
+
             ViewModel.DocumentAdded += OnDocumentAdded;
+        }
+
+        private async void TokenBox_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Down && TokenBox != null)
+            {
+                e.Handled = true;
+                await ViewModel.UpdateFilters().ConfigureAwait(false);
+            }
+
+        }
+
+        private void TokenBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            if (String.IsNullOrEmpty(sender.Text))
+            {
+                TokenBox.SuggestedItemsSource = ViewModel.Categories;
+            }
+            else
+            {
+                TokenBox.SuggestedItemsSource = ViewModel.Categories.Where(c => c.Contains(sender.Text, StringComparison.OrdinalIgnoreCase));
+            }
         }
 
         private void OnDocumentAdded(object sender, RdlnDocument e)
@@ -48,6 +83,16 @@ namespace ReadlnLibrary.Views
                 await ViewModel.AddFiles(e.Parameter as IReadOnlyList<IStorageItem>);
             }
         }
+        private async void TokenItemRemoved(TokenizingTextBox sender, object args)
+        {
+            await ViewModel.UpdateFilters().ConfigureAwait(false);
+        }
+
+        private async void TokenItemAdded(TokenizingTextBox sender, object data)
+        {
+            await ViewModel.UpdateFilters().ConfigureAwait(false);
+        }
+
 
         private void OnElementIndexChanged(ItemsRepeater sender, ItemsRepeaterElementIndexChangedEventArgs args)
         {

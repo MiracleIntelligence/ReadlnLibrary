@@ -1,4 +1,9 @@
 ﻿using System;
+
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+
 using ReadlnLibrary.Core.Helpers;
 using ReadlnLibrary.Services;
 using Windows.ApplicationModel;
@@ -9,6 +14,7 @@ namespace ReadlnLibrary
 {
     public sealed partial class App : Application
     {
+        private const string APP_CENTER_ID = "626978b8-4801-4816-a9e8-9d8d2ca19210";
         private Lazy<ActivationService> _activationService;
 
         private ActivationService ActivationService
@@ -25,6 +31,9 @@ namespace ReadlnLibrary
 
             // Deferred execution until used. Check https://msdn.microsoft.com/library/dd642331(v=vs.110).aspx for further info on Lazy<T> class.
             _activationService = new Lazy<ActivationService>(CreateActivationService);
+
+            AppCenter.Start(APP_CENTER_ID,
+                   typeof(Analytics), typeof(Crashes));
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)

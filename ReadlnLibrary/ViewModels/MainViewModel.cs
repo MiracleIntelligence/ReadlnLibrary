@@ -20,6 +20,8 @@ using ReadlnLibrary.Views;
 using System.IO;
 using Windows.UI.Popups;
 using ReadlnLibrary.Dialogs;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ReadlnLibrary.ViewModels
 {
@@ -33,7 +35,8 @@ namespace ReadlnLibrary.ViewModels
         public ICommand EditDocCommand { get; private set; }
         public ICommand SetGroupCommand { get; private set; }
         public ICommand SettingsCommand { get; private set; }
-
+        public ObservableCollection<string> Tokens { get; set; }
+        public ObservableCollection<string> Categories { get; set; }
         public GroupedObservableCollection<string, RdlnDocument> GroupedDocuments { get; private set; }
         public bool LibraryIsEmpty => !(GroupedDocuments?.Count > 0);
         public MainViewModel(DocumentService documentService)
@@ -46,6 +49,10 @@ namespace ReadlnLibrary.ViewModels
             EditDocCommand = new RelayCommand<RdlnDocument>(EditDoc);
             SetGroupCommand = new RelayCommand<string>(SetGroup);
             SettingsCommand = new RelayCommand(GoToSettings);
+
+            Tokens = new ObservableCollection<string>();
+
+            Categories = new ObservableCollection<string>();
         }
 
         public event EventHandler<RdlnDocument> DocumentAdded;
@@ -53,6 +60,11 @@ namespace ReadlnLibrary.ViewModels
         private void GoToSettings()
         {
             ViewModelLocator.Current.NavigationService.Navigate(typeof(SettingsViewModel).FullName);
+        }
+
+        public async Task UpdateFilters()
+        {
+            await UpdateDocuments(Tokens).ConfigureAwait(false);
         }
 
         private async void SetGroup(string order)
@@ -178,11 +190,29 @@ namespace ReadlnLibrary.ViewModels
         {
             DatabaseManager.InitConnection();
 
+            await UpdateDocuments().ConfigureAwait(false);
+        }
+
+        internal async Task UpdateDocuments(IEnumerable<string> filters = null)
+        {
             var docs = DatabaseManager.Connection.Table<RdlnDocument>().ToList();
+
+            if (filters != null && filters.Any())
+            {
+                docs = docs.Where(d => filters.Contains(d.Category)).ToList();
+            }
+
             var group = Constants.GroupCategories.CATEGORY;
             try
             {
                 group = await ApplicationData.Current.LocalFolder.ReadAsync<string>(Constants.Settings.ORDER).ConfigureAwait(true);
+
+                Categories.Clear();
+                var categories = DatabaseManager.Connection.Table<RdlnCategory>().ToList();
+                foreach (var category in categories)
+                {
+                    Categories.Add(category.Name);
+                }
 
             }
             finally
