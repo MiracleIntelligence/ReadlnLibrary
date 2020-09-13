@@ -182,13 +182,15 @@
             <Grid Grid.Row="1">
                 <StackPanel>
                     <TextBlock
+                        x:Uid="Main_Text_1"
                         HorizontalAlignment="Center"
                         FontSize="36"
-                        Text="Tap to add documents" />
+                        Text="#Tap to add documents" />
                     <TextBlock
+                        x:Uid="Main_Text_2"
                         HorizontalAlignment="Center"
                         FontSize="16"
-                        Text="We will organize them for you" />
+                        Text="#We will organize them for you" />
                 </StackPanel>
                 <Grid
                     Grid.Row="1"

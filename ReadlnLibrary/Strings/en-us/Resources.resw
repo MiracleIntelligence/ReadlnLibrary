@@ -233,4 +233,10 @@
     <value>This is a sample page that will show activation parameters if the app is activated from Deep Linking.</value>
     <comment>Description text for SchemeActivationSamplePage</comment>
   </data>
+  <data name="Main_Text_1.Text" xml:space="preserve">
+    <value>Tap to add documents</value>
+  </data>
+  <data name="Main_Text_2.Text" xml:space="preserve">
+    <value>We will organize them for you</value>
+  </data>
 </root>
