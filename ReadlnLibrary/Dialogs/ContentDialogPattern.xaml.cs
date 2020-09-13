@@ -5,7 +5,7 @@ namespace ReadlnLibrary.Dialogs
 {
     public sealed partial class ContentDialogPattern : ContentDialog
     {
-        public string Delimiter => TextBlockDelimiter.Text;
+        public string Delimiter => TextBoxDelimiter.Text;
         public string Pattern => TextBoxPattern.Text;
         public ContentDialogPattern()
         {
