@@ -193,6 +193,7 @@
     <Compile Include="Services\UserActivityData.cs" />
     <Compile Include="Services\UserActivityService.cs" />
     <Compile Include="Services\UserActivityService.Sample.cs" />
+    <Compile Include="Strings\KeyConstants.cs" />
     <Compile Include="TemplateSelectors\FieldTemplateSelector.cs" />
     <Compile Include="TemplateSelectors\SharedContentTemplateSelector.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -348,6 +349,7 @@
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <PRIResource Include="Strings\uk-ua\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -360,6 +362,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\MI\MI.Toolkit.Localization\MI.Toolkit.Localization\MI.Toolkit.Localization.csproj">
+      <Project>{AEE5B8AC-987B-4BD8-A196-BFFF6413E390}</Project>
+      <Name>MI.Toolkit.Localization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ReadlnLibrary.Core\ReadlnLibrary.Core.csproj">
       <Project>{F83FC975-F87A-4121-B5F0-D0D4D350E58F}</Project>
       <Name>ReadlnLibrary.Core</Name>

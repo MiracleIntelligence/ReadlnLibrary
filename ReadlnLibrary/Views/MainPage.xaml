@@ -26,18 +26,18 @@
         <Flyout x:Key="DocFlyout" x:Name="DocFlyout">
             <StackPanel>
                 <Button
-                    x:Uid="ButtonEdit"
+                    x:Uid="Main_b_Edit"
                     Click="DocFlyoutButtonClick"
                     Command="{x:Bind ViewModel.EditDocCommand}"
                     CommandParameter="{Binding}"
-                    Content="Edit"
+                    Content="#Edit"
                     Style="{StaticResource FlyoutButtonStyle}" />
                 <Button
-                    x:Uid="ButtonRemove"
+                    x:Uid="Main_b_Remove"
                     Click="DocFlyoutButtonClick"
                     Command="{x:Bind ViewModel.RemoveDocCommand}"
                     CommandParameter="{Binding}"
-                    Content="Remove"
+                    Content="#Remove"
                     Style="{StaticResource FlyoutButtonStyle}" />
             </StackPanel>
         </Flyout>
@@ -93,38 +93,49 @@
     <Page.TopAppBar>
         <CommandBar x:Name="CommandBarTop">
             <AppBarToggleButton
+                x:Name="Add"
+                x:Uid="Main_Add"
                 Command="{x:Bind ViewModel.AddFileCommand}"
                 Icon="Add"
-                Label="Add" />
+                Label="#Add" />
             <CommandBar.SecondaryCommands>
                 <AppBarButton
+                    x:Name="abbTitle"
+                    x:Uid="Main_Title"
                     Command="{x:Bind ViewModel.SetGroupCommand}"
                     CommandParameter="Title"
-                    Label="Order by Title" />
+                    Label="#Order by Title" />
                 <AppBarButton
+                    x:Name="abbCategory"
+                    x:Uid="Main_Category"
                     Command="{x:Bind ViewModel.SetGroupCommand}"
                     CommandParameter="Category"
-                    Label="Order by Category" />
+                    Label="#Order by Category" />
                 <AppBarButton
+                    x:Name="abbAuthor"
+                    x:Uid="Main_Author"
                     Command="{x:Bind ViewModel.SetGroupCommand}"
                     CommandParameter="Author"
-                    Label="Order by Author" />
+                    Label="#Order by Author" />
             </CommandBar.SecondaryCommands>
             <CommandBar.Content>
                 <StackPanel Orientation="Horizontal">
                     <AppBarButton
+                        x:Name="abbSettings"
+                        x:Uid="Main_Settings"
                         Command="{x:Bind ViewModel.SettingsCommand}"
                         Icon="Setting"
                         IsCompact="{Binding IsOpen, ElementName=CommandBarTop, Converter={StaticResource BoolNegationConverter}}"
-                        Label="Settings" />
+                        Label="#Settings" />
                     <controls:TokenizingTextBox
                         x:Name="TokenBox"
+                        x:Uid="Main_ttb_Category"
                         MinWidth="250"
                         Margin="1"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Top"
                         ItemsSource="{x:Bind ViewModel.Tokens}"
-                        PlaceholderText="Category"
+                        PlaceholderText="#Category"
                         QueryIcon="{ex:SymbolIconSource Symbol=Filter}"
                         SuggestedItemsSource="{x:Bind ViewModel.Categories}"
                         TextMemberPath="Text"

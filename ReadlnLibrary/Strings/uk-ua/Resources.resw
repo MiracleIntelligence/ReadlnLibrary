@@ -146,31 +146,31 @@
     <comment>File name is null or empty to save file in settings storage extensions</comment>
   </data>
   <data name="Settings_Theme.Text" xml:space="preserve">
-    <value>Choose Theme</value>
+    <value>Вибрати тему</value>
     <comment>Choose theme text for Settings</comment>
   </data>
   <data name="Settings_Theme_Dark.Content" xml:space="preserve">
-    <value>Dark</value>
+    <value>Темна</value>
     <comment>Dark theme text for Settings</comment>
   </data>
   <data name="Settings_Theme_Default.Content" xml:space="preserve">
-    <value>Windows default</value>
+    <value>За замовчуванням</value>
     <comment>Windows default theme text for Settings</comment>
   </data>
   <data name="Settings_Theme_Light.Content" xml:space="preserve">
-    <value>Light</value>
+    <value>Світла</value>
     <comment>Light theme text for Settings</comment>
   </data>
   <data name="Settings_About.Text" xml:space="preserve">
-    <value>About this application</value>
+    <value>Про додаток</value>
     <comment>About this application title for Settings</comment>
   </data>
   <data name="Settings_AboutDescription.Text" xml:space="preserve">
-    <value>Rdln Library is a lightweight document organizer. Try it!)</value>
+    <value>Rdln Library легкий і зрозумілий органайзер для документів. Спробуйте!</value>
     <comment>About this application description for Settings</comment>
   </data>
   <data name="Settings_PrivacyTermsLink.Content" xml:space="preserve">
-    <value>Privacy Statement</value>
+    <value>Заява про конфіденційність</value>
     <comment>Privacy Statement link content for Settings</comment>
   </data>
   <data name="Settings_PrivacyTermsLink.NavigateUri" xml:space="preserve">
@@ -178,7 +178,7 @@
     <comment>Here is your Privacy Statement url for Settings</comment>
   </data>
   <data name="Settings_Personalization.Text" xml:space="preserve">
-    <value>Personalization</value>
+    <value>Персоналізація</value>
     <comment>Personalization text for Settings</comment>
   </data>
   <data name="ExceptionEnumToBooleanConverterValueMustBeAnEnum" xml:space="preserve">
@@ -190,7 +190,7 @@
     <comment>Parameter must be an Enum name in enum to boolean converter</comment>
   </data>
   <data name="Settings_Title.Text" xml:space="preserve">
-    <value>Settings</value>
+    <value>Налаштування</value>
     <comment>Page title for SettingsPage</comment>
   </data>
   <data name="ShareTarget_CompleteButton.Content" xml:space="preserve">
@@ -230,34 +230,34 @@
     <comment>Description text for SchemeActivationSamplePage</comment>
   </data>
   <data name="Main_Text_1.Text" xml:space="preserve">
-    <value>Tap to add documents</value>
+    <value>Доторкніться щоб додати документи</value>
   </data>
   <data name="Main_Text_2.Text" xml:space="preserve">
-    <value>We will organize them for you</value>
+    <value>Ми впорядкуємо їх для вас</value>
   </data>
   <data name="AddDocumentDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Save</value>
+    <value>Зберегти</value>
   </data>
   <data name="AddDocumentDialog.SecondaryButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Скасувати</value>
   </data>
   <data name="AddDocumentDialog.Title" xml:space="preserve">
-    <value>Document</value>
+    <value>Документ</value>
   </data>
   <data name="AddDocumentDialog_asb_Category.PlaceholderText" xml:space="preserve">
-    <value>Category</value>
+    <value>Категорія</value>
   </data>
   <data name="AddDocumentDialog_tb_Category.Text" xml:space="preserve">
-    <value>Category</value>
+    <value>Категорія</value>
   </data>
   <data name="ContentDialogDelimiter_tb_Template.Text" xml:space="preserve">
-    <value>Template:</value>
+    <value>Шабалон:</value>
   </data>
   <data name="ContentDialogPattern.Title" xml:space="preserve">
-    <value>Select Pattern?</value>
+    <value>Задати Шаблон?</value>
   </data>
   <data name="ContentDIalogPattern.SecondaryButtonText" xml:space="preserve">
-    <value>Skip</value>
+    <value>Пропустити</value>
   </data>
   <data name="ContentDialogPattern_tbx_Delimiter.Text" xml:space="preserve">
     <value>_ / , / - / or any...</value>
@@ -266,48 +266,48 @@
     <value>Set name pattern like: Title_Name_Author</value>
   </data>
   <data name="ContentDialogPattern_tb_Delimiter.Text" xml:space="preserve">
-    <value>Set template delimiter :</value>
+    <value>Вкажіть розділювач :</value>
   </data>
   <data name="ContentDialogPattern_tb_Description_1.Text" xml:space="preserve">
-    <value>Use template to set attributes based on file name for multiple files. Ex:</value>
+    <value>Використовайте шаблон щоб задати атрибути документа автоматично. Приклад:</value>
   </data>
   <data name="ContentDialogPattern_tb_Description_2.Text" xml:space="preserve">
-    <value>File name: Rdln-logo.png</value>
+    <value>Назва файлу: Rdln-logo.png</value>
   </data>
   <data name="ContentDialogPattern_tb_Description_3.Text" xml:space="preserve">
-    <value>Delimiter: '-'</value>
+    <value>Розділювач: '-'</value>
   </data>
   <data name="ContentDialogPattern_tb_Description_4.Text" xml:space="preserve">
-    <value>Template: 'Author-Name'</value>
+    <value>Шаблон: 'Author-Name'</value>
   </data>
   <data name="ContentDialogPattern_tb_Description_5.Text" xml:space="preserve">
-    <value>Result: Author set as 'Rdln', Name as 'logo'</value>
+    <value>Результат: Автор - 'Rdln', Назва - 'logo'</value>
   </data>
   <data name="Main_Add.Label" xml:space="preserve">
-    <value>Add</value>
+    <value>Додати</value>
   </data>
   <data name="Main_Author.Label" xml:space="preserve">
-    <value>Order by Author</value>
+    <value>Впорядкувати за Автором</value>
   </data>
   <data name="Main_b_Edit.Content" xml:space="preserve">
-    <value>Edit</value>
+    <value>Редагувати</value>
   </data>
   <data name="Main_b_Remove.Content" xml:space="preserve">
-    <value>Remove</value>
+    <value>Видалити</value>
   </data>
   <data name="Main_Category.Label" xml:space="preserve">
-    <value>Order by Category</value>
+    <value>Впорядкувати за Категорією</value>
   </data>
   <data name="Main_Settings.Label" xml:space="preserve">
-    <value>Settings</value>
+    <value>Налаштування</value>
   </data>
   <data name="Main_Title.Label" xml:space="preserve">
-    <value>Order by Title</value>
+    <value>Впорядкувати за Заголовком</value>
   </data>
   <data name="Main_ttb_Category.PlaceholderText" xml:space="preserve">
-    <value>Category</value>
+    <value>Категорія</value>
   </data>
   <data name="GROUP_BY" xml:space="preserve">
-    <value>group by</value>
+    <value>впорядкувати за</value>
   </data>
 </root>

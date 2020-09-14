@@ -7,11 +7,14 @@ using System.Linq;
 
 using GalaSoft.MvvmLight.Ioc;
 
+using MI.Toolkit.Localization;
+
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using Microsoft.UI.Xaml.Controls;
 
 using ReadlnLibrary.Core.Models;
 using ReadlnLibrary.Services;
+using ReadlnLibrary.Strings;
 using ReadlnLibrary.ViewModels;
 
 using Windows.ApplicationModel.DataTransfer;
@@ -154,9 +157,11 @@ namespace ReadlnLibrary.Views
 
             CommandBarTop.SecondaryCommands.Clear();
 
+            var groupByString = Localizer.GetLocalizedStringOrReturnKey(KeyConstants.GROUP_BY);
+
             CommandBarTop.SecondaryCommands.Add(new AppBarButton
             {
-                Label = $"group by {Constants.GroupCategories.CATEGORY}",
+                Label = $"{groupByString} {Constants.GroupCategories.CATEGORY}",
                 Command = ViewModel.SetGroupCommand
             });
 
@@ -168,7 +173,7 @@ namespace ReadlnLibrary.Views
                 }
                 var button = new AppBarButton()
                 {
-                    Label = $"group by {field.Name}",
+                    Label = $"{groupByString} {field.Name}",
                     Command = ViewModel.SetGroupCommand,
                     CommandParameter = field.Name
                 };
