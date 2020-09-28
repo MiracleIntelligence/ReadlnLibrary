@@ -59,7 +59,16 @@ namespace ReadlnLibrary.Views
 
         private void TokenBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            if (String.IsNullOrEmpty(sender.Text))
+            if (TokenBox == null)
+            {
+                return;
+            }
+            if (ViewModel.Categories == null)
+            {
+                return;
+            }
+
+            if (String.IsNullOrEmpty(sender?.Text))
             {
                 TokenBox.SuggestedItemsSource = ViewModel.Categories;
             }
